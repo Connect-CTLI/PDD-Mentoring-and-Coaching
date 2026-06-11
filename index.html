@@ -247,30 +247,22 @@ The platform supports two staff members who are transitioning into new roles and
 
 <div class="feature-card">
 <h3>🎯 Goal</h3>
-<p>
-Clarify developmental goals and expected outcomes for each coachee.
-</p>
+<p>Clarify developmental goals and expected outcomes for each coachee.</p>
 </div>
 
 <div class="feature-card">
 <h3>🔍 Reality</h3>
-<p>
-Assess current levels of knowledge, confidence and competence.
-</p>
+<p>Assess current levels of knowledge, confidence and competence.</p>
 </div>
 
 <div class="feature-card">
 <h3>💡 Options</h3>
-<p>
-Explore strategies, resources and workplace learning opportunities.
-</p>
+<p>Explore strategies, resources and workplace learning opportunities.</p>
 </div>
 
 <div class="feature-card">
 <h3>🚀 Way Forward</h3>
-<p>
-Agree on practical actions and monitor progress over time.
-</p>
+<p>Agree on practical actions and monitor progress over time.</p>
 </div>
 
 </div>
@@ -285,9 +277,15 @@ Purpose of the Coaching Programme
 
 The coaching programme has been designed to support workplace learning, knowledge transfer and role transition.
 
+<br><br>
+
 David Oliphant will be coached in preparation for assuming LMS Administration responsibilities within Connect@CTLI.
 
+<br><br>
+
 Bomikazi Majikijela will be coached in preparation for assuming Office Management responsibilities within the Programme Design and Development Unit.
+
+<br><br>
 
 The programme combines workplace learning, reflective practice, coaching conversations and competency development.
 
@@ -297,22 +295,16 @@ The programme combines workplace learning, reflective practice, coaching convers
 
 </div>
 
-</div>
+<!-- DAVID -->
 
-<!-- DASHBOARD -->
+<div id="david" class="tab-content">
 
-<div class="card">
+<h2 class="section-heading">
+David Oliphant Coaching Workspace
+</h2>
 
-<div class="card-title">
-📈 Progress Dashboard
-</div>
-
-<div id="dashboardDavid">
-
-Progress data will appear here after completing the skills assessment.
-
-</div>
-
+<div class="coming-soon">
+David coaching tools will be added here.
 </div>
 
 </div>
@@ -326,7 +318,7 @@ Bomikazi Majikijela Coaching Workspace
 </h2>
 
 <div class="coming-soon">
-Bomikazi coaching tools loading in Part 3...
+Bomikazi coaching tools will be added here.
 </div>
 
 </div>
@@ -335,117 +327,6 @@ Bomikazi coaching tools loading in Part 3...
 
 <script>
 
-function calculateDavidNeeds(){
-
-let priorities=[];
-
-if(Number(document.getElementById('ua').value)<=2){
-priorities.push('User Administration');
-}
-
-if(Number(document.getElementById('reporting').value)<=2){
-priorities.push('Reporting');
-}
-
-if(Number(document.getElementById('calendar').value)<=2){
-priorities.push('Calendar Management');
-}
-
-if(Number(document.getElementById('course').value)<=2){
-priorities.push('Course Development');
-}
-
-if(Number(document.getElementById('support').value)<=2){
-priorities.push('User Support');
-}
-
-let html='<h3>Development Priorities</h3>';
-
-if(priorities.length===0){
-html+='<p>No immediate high priority development needs identified.</p>';
-}else{
-
-html+='<ul>';
-
-priorities.forEach(item=>{
-html+='<li>'+item+'</li>';
-});
-
-html+='</ul>';
-}
-
-document.getElementById('davidResults').innerHTML=html;
-
-document.getElementById('dashboardDavid').innerHTML=
-'<strong>Priority Areas:</strong><br><br>'+priorities.join('<br>');
-
-}
-
-function saveDavidGrow(){
-
-localStorage.setItem(
-'davidGoal',
-document.getElementById('goalDavid').value
-);
-
-localStorage.setItem(
-'davidReality',
-document.getElementById('realityDavid').value
-);
-
-localStorage.setItem(
-'davidOptions',
-document.getElementById('optionsDavid').value
-);
-
-localStorage.setItem(
-'davidForward',
-document.getElementById('forwardDavid').value
-);
-
-document.getElementById('growStatus').innerHTML='Saved';
-
-}
-
-function saveDavidReflection(){
-
-localStorage.setItem(
-'davidReflection',
-document.getElementById('reflectionDavid').value
-);
-
-document.getElementById('reflectionStatus').innerHTML='Saved';
-
-}
-
-window.onload=function(){
-
-if(localStorage.getItem('davidGoal')){
-document.getElementById('goalDavid').value=
-localStorage.getItem('davidGoal');
-}
-
-if(localStorage.getItem('davidReality')){
-document.getElementById('realityDavid').value=
-localStorage.getItem('davidReality');
-}
-
-if(localStorage.getItem('davidOptions')){
-document.getElementById('optionsDavid').value=
-localStorage.getItem('davidOptions');
-}
-
-if(localStorage.getItem('davidForward')){
-document.getElementById('forwardDavid').value=
-localStorage.getItem('davidForward');
-}
-
-if(localStorage.getItem('davidReflection')){
-document.getElementById('reflectionDavid').value=
-localStorage.getItem('davidReflection');
-}
-
-}
 function showTab(tabId,button){
 
 document.querySelectorAll('.tab-content')
