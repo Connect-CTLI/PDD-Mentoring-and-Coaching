@@ -204,7 +204,18 @@ h1{
     resize:vertical;
 }
 @media(max-width:768px){
+.accordion-toggle{
+    cursor:pointer;
+    user-select:none;
+}
 
+.accordion-content{
+    display:none;
+}
+
+.accordion-content.open{
+    display:block;
+}
     body{
         padding:14px;
     }
@@ -453,11 +464,13 @@ Use the development needs identified through your Skills Gap Analysis to inform 
 
 <div class="grow-stage">
 
-<div class="grow-header">
-🎯 GOAL
+<div class="grow-header accordion-toggle"
+onclick="toggleAccordion('goalContent')">
+▶ 🎯 GOAL
 </div>
 
-<div class="grow-body">
+<div class="grow-body accordion-content open"
+id="goalContent">
 
 <div class="grow-guide">
 
@@ -491,11 +504,13 @@ id="goalDavid">
 
 <div class="grow-stage">
 
-<div class="grow-header">
-🔍 REALITY
+<div class="grow-header accordion-toggle"
+onclick="toggleAccordion('realityContent')">
+▶ 🔍 REALITY
 </div>
 
-<div class="grow-body">
+<div class="grow-body accordion-content"
+id="realityContent">
 
 <div class="grow-guide">
 
@@ -533,7 +548,13 @@ id="realityDavid">
 💡 OPTIONS
 </div>
 
-<div class="grow-body">
+<div class="grow-body"><div class="grow-header accordion-toggle"
+onclick="toggleAccordion('optionsContent')">
+▶ 💡 OPTIONS
+</div>
+
+<div class="grow-body accordion-content"
+id="optionsContent">
 
 <div class="grow-guide">
 
@@ -568,11 +589,13 @@ id="optionsDavid">
 
 <div class="grow-stage">
 
-<div class="grow-header">
-🚀 WAY FORWARD
+<div class="grow-header accordion-toggle"
+onclick="toggleAccordion('forwardContent')">
+▶ 🚀 WAY FORWARD
 </div>
 
-<div class="grow-body">
+<div class="grow-body accordion-content"
+id="forwardContent">
 
 <div class="grow-guide">
 
@@ -716,6 +739,14 @@ html+='<p>✅ No significant development needs identified.</p>';
 html+='</div>';
 
 document.getElementById('davidResults').innerHTML=html;
+
+}
+function toggleAccordion(id){
+
+const section =
+document.getElementById(id);
+
+section.classList.toggle('open');
 
 }
 function showTab(tabId,button){
