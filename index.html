@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TEST VERSION</title>
+<title>CTLI PDD Coaching & Mentoring Hub</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -325,70 +325,79 @@ Rate your confidence in each competency area.
 <tr>
 <td style="padding:10px;">User Administration</td>
 <td style="padding:10px;">
-<select>
+<select id="ua">
 <option>1</option>
 <option>2</option>
 <option>3</option>
 <option>4</option>
 <option>5</option>
-</select>
+<select id="ua">
 </td>
 </tr>
 
 <tr>
 <td style="padding:10px;">Reporting</td>
 <td style="padding:10px;">
-<select>
+<select id="reporting">
 <option>1</option>
 <option>2</option>
 <option>3</option>
 <option>4</option>
 <option>5</option>
-</select>
+<select id="reporting">
 </td>
 </tr>
 
 <tr>
 <td style="padding:10px;">Calendar Management</td>
 <td style="padding:10px;">
-<select>
+<select id="calendar">
 <option>1</option>
 <option>2</option>
 <option>3</option>
 <option>4</option>
 <option>5</option>
-</select>
+<select id="calendar">
 </td>
 </tr>
 
 <tr>
 <td style="padding:10px;">Course Development</td>
 <td style="padding:10px;">
-<select>
+<select id="course">
 <option>1</option>
 <option>2</option>
 <option>3</option>
 <option>4</option>
 <option>5</option>
-</select>
+<select id="course">
 </td>
 </tr>
 
 <tr>
 <td style="padding:10px;">User Support</td>
 <td style="padding:10px;">
-<select>
+<select id="support">
 <option>1</option>
 <option>2</option>
 <option>3</option>
 <option>4</option>
 <option>5</option>
-</select>
+<select id="support">
 </td>
 </tr>
 
 </table>
+<br>
 
+<button class="nav-btn"
+onclick="calculateDavidNeeds()">
+Analyse Development Needs
+</button>
+
+<div id="davidResults"
+style="margin-top:20px;">
+</div>
 </div>
 
 </div>
@@ -410,7 +419,89 @@ Bomikazi coaching tools will be added here.
 </div>
 
 <script>
+function calculateDavidNeeds(){
 
+let high=[];
+let medium=[];
+
+const skills=[
+{
+name:'User Administration',
+value:Number(document.getElementById('ua').value)
+},
+{
+name:'Reporting',
+value:Number(document.getElementById('reporting').value)
+},
+{
+name:'Calendar Management',
+value:Number(document.getElementById('calendar').value)
+},
+{
+name:'Course Development',
+value:Number(document.getElementById('course').value)
+},
+{
+name:'User Support',
+value:Number(document.getElementById('support').value)
+}
+];
+
+skills.forEach(skill=>{
+
+if(skill.value<=2){
+high.push(skill.name);
+}
+else if(skill.value===3){
+medium.push(skill.name);
+}
+
+});
+
+let html='';
+
+html+='<div class="card" style="margin-top:20px;">';
+
+html+='<h3 style="margin-bottom:15px;">Skills Gap Analysis Results</h3>';
+
+if(high.length>0){
+
+html+='<p><strong>🔴 High Priority Development Areas</strong></p>';
+html+='<ul>';
+
+high.forEach(item=>{
+html+='<li>'+item+'</li>';
+});
+
+html+='</ul><br>';
+
+}
+
+if(medium.length>0){
+
+html+='<p><strong>🟡 Medium Priority Development Areas</strong></p>';
+
+html+='<ul>';
+
+medium.forEach(item=>{
+html+='<li>'+item+'</li>';
+});
+
+html+='</ul>';
+
+}
+
+if(high.length===0 && medium.length===0){
+
+html+='<p>✅ No significant development needs identified.</p>';
+
+}
+
+html+='</div>';
+
+document.getElementById('davidResults').innerHTML=html;
+
+}
 function showTab(tabId,button){
 
 document.querySelectorAll('.tab-content')
