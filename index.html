@@ -3,772 +3,1489 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>CTLI PDD Coaching & Mentoring Hub</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+    --navy:   #001489;
+    --blue:   #007DBA;
+    --green:  #8FAD15;
+    --lime:   #C4D600;
+    --yellow: #FFC600;
+    --teal:   #00A1A3;
+    --red:    #BA0C2F;
+    --grey:   #968C83;
+    --page:   #f2f4f9;
+    --border: #dde1ee;
+    --text:   #001489;
+    --muted:  #5a5f7a;
 }
 
-:root{
-    --navy:#001489;
-    --blue:#007DBA;
-    --green:#8fad15;
-    --page:#f2f4f9;
-    --card:#ffffff;
-    --border:#dde1ee;
-    --text:#001489;
-    --muted:#5a5f7a;
+body { font-family:'Inter',sans-serif; background:var(--page); color:var(--text); padding:24px; }
+
+.wrapper { max-width:1100px; margin:auto; }
+
+/* ── HEADER ── */
+.module-tag { font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--muted); margin-bottom:6px; }
+h1 { color:var(--navy); margin-bottom:8px; font-size:1.6rem; }
+.subtitle { color:var(--muted); margin-bottom:24px; }
+
+/* ── NAV ── */
+.nav-tabs { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px; }
+.nav-btn {
+    border:1px solid var(--border); cursor:pointer; background:white;
+    color:var(--navy); padding:12px 22px; border-radius:50px;
+    font-weight:600; font-family:'Inter',sans-serif; font-size:.9rem; transition:.2s;
+}
+.nav-btn:hover { background:#e6f1fb; }
+.nav-btn.active { background:var(--navy); color:white; border-color:var(--navy); }
+
+/* ── TABS ── */
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* ── HERO ── */
+.hero {
+    background:white; border:1px solid var(--border);
+    border-top:5px solid var(--navy); border-radius:14px; padding:24px; margin-bottom:24px;
+}
+.hero p { line-height:1.7; color:var(--muted); }
+.hero h2 { color:var(--navy); margin-bottom:12px; }
+
+/* ── CARD ── */
+.card { background:white; border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:20px; }
+.card-title { font-size:1.05rem; font-weight:700; color:var(--navy); margin-bottom:10px; }
+.card-text { color:var(--muted); line-height:1.7; }
+
+/* ── GRID ── */
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:24px; }
+.feature-card { background:white; border:1px solid var(--border); border-radius:14px; padding:20px; }
+.feature-card h3 { color:var(--navy); margin-bottom:8px; }
+.feature-card p { color:var(--muted); line-height:1.6; font-size:.9rem; }
+
+.section-heading { font-size:1.2rem; color:var(--navy); margin-bottom:18px; font-weight:700; }
+
+/* ── TABLE ── */
+table { width:100%; border-collapse:collapse; }
+th { background:#f2f4f9; padding:10px 12px; text-align:left; color:var(--navy); font-size:.9rem; }
+td { padding:10px 12px; color:var(--muted); border-bottom:1px solid var(--border); font-size:.9rem; }
+select {
+    padding:6px 10px; border:1px solid var(--border);
+    border-radius:6px; font-family:'Inter',sans-serif; color:var(--navy);
 }
 
-body{
-    font-family:'Inter',sans-serif;
-    background:var(--page);
-    color:var(--text);
-    padding:24px;
+/* ── ACCORDION ── */
+.grow-stage { border:1px solid var(--border); border-radius:12px; margin-bottom:14px; overflow:hidden; }
+.grow-header {
+    background:var(--navy); color:white; padding:14px 18px;
+    font-weight:700; font-size:.95rem; cursor:pointer; user-select:none;
+    display:flex; align-items:center; gap:10px; transition:background .2s;
+}
+.grow-header:hover { background:#0020b0; }
+.grow-header .chevron { display:inline-block; transition:transform .25s ease; flex-shrink:0; }
+.grow-header.open .chevron { transform:rotate(90deg); }
+.grow-body { display:none; padding:18px; background:white; }
+.grow-body.open { display:block; }
+
+/* Session accordion variant */
+.session-stage { border:1px solid var(--border); border-radius:12px; margin-bottom:12px; overflow:hidden; }
+.session-header {
+    background:var(--blue); color:white; padding:13px 18px;
+    font-weight:600; font-size:.9rem; cursor:pointer; user-select:none;
+    display:flex; align-items:center; justify-content:space-between; transition:background .2s;
+}
+.session-header:hover { background:#006ba0; }
+.session-header .chevron { transition:transform .25s ease; flex-shrink:0; }
+.session-header.open .chevron { transform:rotate(90deg); }
+.session-body { display:none; padding:16px; background:white; }
+.session-body.open { display:block; }
+
+.session-date { font-size:.78rem; background:rgba(255,255,255,.25); padding:2px 8px; border-radius:20px; margin-left:auto; margin-right:10px; }
+
+/* ── GUIDE BLOCK ── */
+.grow-guide {
+    background:#f5f8fc; border-left:4px solid var(--blue);
+    padding:14px; margin-bottom:16px; color:var(--muted); line-height:1.7;
+    border-radius:0 6px 6px 0;
+}
+.grow-guide ul { margin-left:20px; margin-top:8px; }
+.grow-guide strong { color:var(--navy); }
+
+/* ── TEXTAREA ── */
+.grow-textarea {
+    width:100%; min-height:110px; padding:12px; border:1px solid var(--border);
+    border-radius:8px; font-family:'Inter',sans-serif; font-size:.9rem;
+    color:var(--text); resize:vertical;
+}
+.grow-textarea:focus { outline:2px solid var(--blue); border-color:var(--blue); }
+
+label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; font-size:.9rem; }
+
+/* ── SAVE ROW ── */
+.save-row { display:flex; align-items:center; justify-content:flex-end; gap:16px; margin-top:20px; flex-wrap:wrap; }
+.save-status { color:var(--green); font-weight:600; font-size:.9rem; }
+
+/* ── PROGRESS / DASHBOARD ── */
+.progress-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:16px; }
+.progress-item { background:#f5f8fc; border-radius:10px; padding:14px; }
+.progress-label { font-size:.8rem; color:var(--navy); font-weight:600; margin-bottom:8px; }
+.progress-bar-bg { background:#dde1ee; border-radius:20px; height:10px; overflow:hidden; }
+.progress-bar-fill { height:10px; border-radius:20px; background:var(--green); transition:width .4s ease; }
+.progress-pct { font-size:.75rem; color:var(--muted); margin-top:5px; text-align:right; }
+
+/* ── JOURNAL ENTRY ── */
+.journal-entry {
+    border:1px solid var(--border); border-radius:10px;
+    padding:14px; margin-bottom:12px; background:white;
+}
+.journal-date { font-size:.78rem; color:var(--muted); margin-bottom:6px; }
+.journal-text { color:var(--text); line-height:1.6; font-size:.9rem; }
+.journal-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+.tag {
+    font-size:.72rem; padding:2px 10px; border-radius:20px;
+    font-weight:600; background:#e8f4fb; color:var(--blue);
 }
 
-.wrapper{
-    max-width:1200px;
-    margin:auto;
+/* ── STATUS BADGE ── */
+.badge {
+    display:inline-block; font-size:.72rem; padding:3px 10px;
+    border-radius:20px; font-weight:700;
+}
+.badge-green { background:#edf6d6; color:#5a7a00; }
+.badge-yellow { background:#fff8e1; color:#9a7200; }
+.badge-blue { background:#e1effa; color:var(--blue); }
+
+/* ── INFO BOX ── */
+.info-box {
+    background:#e8f4fb; border-left:4px solid var(--blue);
+    padding:14px 16px; border-radius:0 8px 8px 0;
+    color:var(--navy); font-size:.9rem; line-height:1.6; margin-bottom:16px;
 }
 
-.module-tag{
-    font-size:.75rem;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    font-weight:700;
-    color:var(--muted);
-    margin-bottom:6px;
+/* ── COMING SOON ── */
+.coming-soon {
+    padding:30px; text-align:center; color:var(--muted);
+    border:2px dashed var(--border); border-radius:14px; background:white;
 }
 
-h1{
-    color:var(--navy);
-    margin-bottom:8px;
+/* ── BACK TO TOP ── */
+.back-top-btn {
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--teal); color:white;
+    border:none; border-radius:50px; padding:10px 20px;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:.85rem;
+    cursor:pointer; transition:.2s; margin-top:10px;
 }
+.back-top-btn:hover { background:#008a8c; }
 
-.subtitle{
-    color:var(--muted);
-    margin-bottom:24px;
+/* ── EXPORT BUTTON ── */
+.export-btn {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--green); color:white;
+    border:none; border-radius:50px; padding:13px 28px;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:.95rem;
+    cursor:pointer; transition:.2s;
 }
+.export-btn:hover { background:#7a9610; }
 
-.hero{
-    background:white;
-    border:1px solid var(--border);
-    border-top:5px solid var(--navy);
-    border-radius:14px;
-    padding:24px;
-    margin-bottom:24px;
-}
-
-.hero p{
-    line-height:1.7;
-    color:var(--muted);
-}
-
-.nav-tabs{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:24px;
-}
-
-.nav-btn{
-    border:none;
-    cursor:pointer;
-    background:white;
-    color:var(--navy);
-    padding:12px 24px;
-    border-radius:50px;
-    font-weight:600;
-    border:1px solid var(--border);
-    transition:.2s;
-}
-
-.nav-btn:hover{
-    background:#e6f1fb;
-}
-
-.nav-btn.active{
-    background:var(--navy);
-    color:white;
-}
-
-.tab-content{
-    display:none;
-}
-
-.tab-content.active{
-    display:block;
-}
-
-.card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:20px;
-    margin-bottom:20px;
-}
-
-.card-title{
-    font-size:1.1rem;
-    font-weight:700;
-    color:var(--navy);
-    margin-bottom:10px;
-}
-
-.card-text{
-    color:var(--muted);
-    line-height:1.7;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:16px;
-}
-
-.feature-card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:20px;
-}
-
-.feature-card h3{
-    color:var(--navy);
-    margin-bottom:8px;
-}
-
-.feature-card p{
-    color:var(--muted);
-    line-height:1.6;
-}
-
-.section-heading{
-    font-size:1.25rem;
-    color:var(--navy);
-    margin-bottom:18px;
-}
-
-.coming-soon{
-    padding:30px;
+/* ── EXPORT CARD ── */
+.export-card {
+    background:white; border:2px solid var(--green);
+    border-radius:14px; padding:24px; margin-bottom:24px;
     text-align:center;
-    color:var(--muted);
-    border:2px dashed var(--border);
-    border-radius:14px;
-    background:white;
-}
-.grow-stage{
-    border:1px solid var(--border);
-    border-radius:12px;
-    margin-bottom:24px;
-    overflow:hidden;
 }
 
-.grow-header{
-    background:var(--navy);
-    color:white;
-    padding:14px 18px;
-    font-weight:700;
-    font-size:1rem;
+/* ══ PRINT / PDF STYLES ══ */
+@media print {
+    body { background:white !important; padding:0 !important; font-size:11pt; }
+    .wrapper { max-width:100% !important; }
+    .nav-tabs, .back-top-btn, .export-card, .export-btn,
+    .nav-btn, button, input[type=range] { display:none !important; }
+    .tab-content { display:block !important; }
+    .david-section, .bomikazi-section { display:block !important; }
+    .grow-body, .session-body { display:block !important; }
+    .card, .hero, .feature-card, .grow-stage, .session-stage,
+    .journal-entry, .progress-item, .info-box {
+        break-inside:avoid; page-break-inside:avoid;
+    }
+    .print-only { display:block !important; }
+    .screen-only { display:none !important; }
+    h1 { font-size:18pt; color:#001489 !important; }
+    h2, .section-heading { font-size:14pt; color:#001489 !important; }
+    .card-title { font-size:12pt; }
+    .print-page-break { page-break-before:always; }
+    .print-header {
+        display:flex !important; align-items:center; justify-content:space-between;
+        border-bottom:3px solid #001489; padding-bottom:12px; margin-bottom:20px;
+    }
+    .grow-textarea {
+        border:1px solid #ccc !important; min-height:60px !important;
+        background:white !important;
+    }
+    .grow-header { background:#001489 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .session-header { background:#007DBA !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    th { background:#f2f4f9 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .progress-bar-fill { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 }
 
-.grow-body{
-    padding:18px;
-}
-
-.grow-guide{
-    background:#f5f8fc;
-    border-left:4px solid var(--blue);
-    padding:14px;
-    margin-bottom:16px;
-    color:var(--muted);
-    line-height:1.7;
-}
-
-.grow-textarea{
-    width:100%;
-    min-height:120px;
-    padding:12px;
-    border:1px solid var(--border);
-    border-radius:8px;
-    font-family:inherit;
-    resize:vertical;
-}
+/* ── MOBILE ── */
 @media(max-width:768px){
-.accordion-toggle{
-    cursor:pointer;
-    user-select:none;
-}
-
-..grow-body{
-    display:none;
-    padding:18px;
-}
-
-.grow-body.open{
-    display:block;
-}
-    body{
-        padding:14px;
-    }
-
-    .nav-tabs{
-        flex-direction:column;
-    }
-
-    .nav-btn{
-        width:100%;
-    }
-
+    body { padding:14px; }
+    .nav-tabs { flex-direction:column; }
+    .nav-btn { width:100%; text-align:center; }
+    .grid { grid-template-columns:1fr; }
+    .save-row { justify-content:center; }
+    h1 { font-size:1.3rem; }
 }
 
 </style>
 </head>
-
 <body>
-
 <div class="wrapper">
 
-<div class="module-tag">
-CTLI Coaching & Mentoring Hub
-</div>
+<div class="module-tag">CTLI Programme Design & Development Unit</div>
+<h1>Coaching &amp; Mentoring Development Hub</h1>
+<p class="subtitle">Professional Coaching Programme · Planned Coaching Intervention · GROW Model</p>
 
-<h1>
-Mentoring and Coaching Development Platform
-</h1>
-
-<p class="subtitle">
-Digital coaching support environment for workplace based development.
-</p>
-
+<!-- NAV -->
 <div class="nav-tabs">
-
-<button class="nav-btn active"
-onclick="showTab('home',this)">
-Home
-</button>
-
-<button class="nav-btn"
-onclick="showTab('david',this)">
-David Oliphant
-</button>
-
-<button class="nav-btn"
-onclick="showTab('bomikazi',this)">
-Bomikazi Majikijela
-</button>
-
+    <button class="nav-btn active" onclick="showTab('home',this)">🏠 Home</button>
+    <button class="nav-btn" onclick="showTab('david',this)">👤 David Oliphant</button>
+    <button class="nav-btn" onclick="showTab('bomikazi',this)">👤 Bomikazi Majikijela</button>
 </div>
 
-<!-- HOME -->
-
+<!-- ══════════════════════════════════════════
+     HOME TAB
+══════════════════════════════════════════ -->
 <div id="home" class="tab-content active">
 
-<div class="hero">
+<!-- PRINT ONLY HEADER — hidden on screen -->
+<div class="print-header" style="display:none;">
+    <div>
+        <div style="font-size:8pt;text-transform:uppercase;letter-spacing:.08em;color:#5a5f7a;margin-bottom:4px;">CTLI Programme Design &amp; Development Unit</div>
+        <div style="font-size:16pt;font-weight:700;color:#001489;">Coaching &amp; Mentoring — Final Summary Record</div>
+        <div style="font-size:9pt;color:#5a5f7a;">Workplace Coaching Programme · GROW Coaching Model</div>
+    </div>
+    <div style="text-align:right;font-size:8pt;color:#5a5f7a;">
+        Generated: <span id="print_date"></span><br>
+        CONFIDENTIAL · Internal Coaching Record
+    </div>
+</div>
 
-<h2 style="margin-bottom:12px;">
-Welcome
-</h2>
+    <div class="hero">
+        <h2>Welcome to the Coaching Hub</h2>
+        <p>This digital coaching environment has been developed as part of a planned workplace coaching and mentoring intervention within the Programme Design and Development Unit of CTLI. The Hub supports a structured workplace coaching and mentoring programme within the Programme Design and Development Unit.</p>
+        <br>
+        <p>The intervention supports two staff members transitioning into new roles, using the GROW coaching model embedded directly into a digital platform that demonstrates coaching theory, reflective practice and digital innovation.</p>
+    </div>
 
-<p>
-This digital coaching hub has been developed to support a planned coaching and mentoring intervention within the Programme Design and Development Unit of CTLI.
-</p>
+    <div class="grid">
+        <div class="feature-card">
+            <h3>🎯 Goal</h3>
+            <p>Clarify developmental goals and expected outcomes for each coachee in their new role.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🔍 Reality</h3>
+            <p>Assess current levels of knowledge, confidence and competence against role requirements.</p>
+        </div>
+        <div class="feature-card">
+            <h3>💡 Options</h3>
+            <p>Explore strategies, resources and workplace learning opportunities for development.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🚀 Way Forward</h3>
+            <p>Agree on practical actions and monitor progress through structured coaching sessions.</p>
+        </div>
+    </div>
 
-<br>
+    <div class="card">
+        <div class="card-title">📋 Coaching Intervention Overview</div>
+        <div class="card-text">
+            <table>
+                <tr>
+                    <th>Coachee</th>
+                    <th>New Role</th>
+                    <th>Start Date</th>
+                    <th>Coaching Commencement</th>
+                </tr>
+                <tr>
+                    <td><strong style="color:var(--navy)">David Oliphant</strong></td>
+                    <td>LMS Administrator · Connect@CTLI</td>
+                    <td>1 June 2026</td>
+                    <td>2 June 2026</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:var(--navy)">Bomikazi Majikijela</strong></td>
+                    <td>Office Manager · PDD Unit</td>
+                    <td>9 June 2026 (returns from maternity leave)</td>
+                    <td>10 June 2026</td>
+                </tr>
+            </table>
+            <br>
+            <p>The programme combines workplace learning, reflective practice, coaching conversations and competency development aligned to the GROW model.</p>
+        </div>
+    </div>
 
-<p>
-The platform supports two staff members who are transitioning into new roles and provides digital tools aligned to the GROW coaching model.
-</p>
+    <div class="card">
+        <div class="card-title">💡 Digital Coaching Strategy</div>
+        <div class="card-text">
+            This Hub is hosted via GitHub Pages as a live digital coaching environment. It demonstrates digital leadership, technology-enhanced coaching and self-directed learning. The platform replaces traditional paper-based coaching records with interactive tools including development needs analysis, GROW planners, reflection journals and progress dashboards — all accessible on mobile devices and through Moodle.
+        </div>
+    </div>
+
+    <!-- EXPORT CARD -->
+    <div class="export-card screen-only">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:8px;">📄 Export Final Coaching Summary</div>
+        <p style="color:var(--muted);font-size:.9rem;margin-bottom:18px;line-height:1.6;">
+            Generate a consolidated PDF record of all coaching data for both coachees — including development needs, GROW plans, session reflections and progress — for coaching records and professional development purposes.
+        </p>
+        <button class="export-btn" onclick="exportPDF()">⬇ Download Full Coaching Summary (PDF)</button>
+    </div>
 
 </div>
 
-<div class="grid">
-
-<div class="feature-card">
-<h3>🎯 Goal</h3>
-<p>Clarify developmental goals and expected outcomes for each coachee.</p>
-</div>
-
-<div class="feature-card">
-<h3>🔍 Reality</h3>
-<p>Assess current levels of knowledge, confidence and competence.</p>
-</div>
-
-<div class="feature-card">
-<h3>💡 Options</h3>
-<p>Explore strategies, resources and workplace learning opportunities.</p>
-</div>
-
-<div class="feature-card">
-<h3>🚀 Way Forward</h3>
-<p>Agree on practical actions and monitor progress over time.</p>
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-title">
-Purpose of the Coaching Programme
-</div>
-
-<div class="card-text">
-
-The coaching programme has been designed to support workplace learning, knowledge transfer and role transition.
-
-<br><br>
-
-David Oliphant will be coached in preparation for assuming LMS Administration responsibilities within Connect@CTLI.
-
-<br><br>
-
-Bomikazi Majikijela will be coached in preparation for assuming Office Management responsibilities within the Programme Design and Development Unit.
-
-<br><br>
-
-The programme combines workplace learning, reflective practice, coaching conversations and competency development.
-
-</div>
-
-</div>
-
-</div>
-
-<!-- DAVID -->
-
+<!-- ══════════════════════════════════════════
+     DAVID TAB
+══════════════════════════════════════════ -->
 <div id="david" class="tab-content">
 
-<h2 class="section-heading">
-David Oliphant Coaching Workspace
-</h2>
+    <div class="info-box">
+        <strong>David Oliphant</strong> commenced as LMS Administrator on 1 June 2026. This coaching programme supports his transition into the Connect@CTLI Moodle administration role through structured workplace coaching aligned to the GROW model.
+    </div>
 
-<div class="card">
+    <!-- ── SECTION TABS for David ── -->
+    <div class="nav-tabs" style="margin-bottom:20px;">
+        <button class="nav-btn active" onclick="showSection('d-dna','david',this)">📊 Needs Analysis</button>
+        <button class="nav-btn" onclick="showSection('d-grow','david',this)">🎯 GROW Planner</button>
+        <button class="nav-btn" onclick="showSection('d-schedule','david',this)">📅 Coaching Schedule</button>
+        <button class="nav-btn" onclick="showSection('d-journal','david',this)">📓 Reflection Journal</button>
+        <button class="nav-btn" onclick="showSection('d-dashboard','david',this)">📈 Progress Dashboard</button>
+    </div>
 
-<div class="card-title">
-📊 Development Needs Analysis
+    <!-- ── DEVELOPMENT NEEDS ANALYSIS ── -->
+    <div id="d-dna" class="david-section">
+        <h2 class="section-heading">📊 Development Needs Analysis</h2>
+        <div class="card">
+            <div class="card-title">Competency Self-Assessment</div>
+            <div class="card-text" style="margin-bottom:16px;">Rate your current confidence in each LMS Administrator competency area. 1 = No experience · 5 = Fully confident.</div>
+            <table>
+                <tr><th>Competency Area</th><th>Self-Rating (1–5)</th><th>Notes</th></tr>
+                <tr>
+                    <td>User Administration</td>
+                    <td><select id="d_ua"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="d_ua_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>Reporting</td>
+                    <td><select id="d_rep"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="d_rep_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>Calendar Management</td>
+                    <td><select id="d_cal"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="d_cal_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>Course Development</td>
+                    <td><select id="d_crs"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="d_crs_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>User Support</td>
+                    <td><select id="d_sup"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="d_sup_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+            </table>
+            <br>
+            <button class="nav-btn" onclick="calcDavid()">Analyse Development Needs</button>
+            <div id="davidResults"></div>
+            <div style="text-align:center;margin-top:16px;">
+                <button class="back-top-btn" onclick="scrollToTop()">↑ Back to Top</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── GROW PLANNER ── -->
+    <div id="d-grow" class="david-section" style="display:none;">
+        <h2 class="section-heading">🎯 GROW Coaching Planner</h2>
+        <div class="card">
+            <div class="card-text" style="margin-bottom:20px;">
+                Use your development needs analysis to inform your reflections below. Click each section heading to open it.
+            </div>
+
+            <div class="grow-stage">
+                <div class="grow-header" onclick="toggleAcc(this,'dg_goal')">
+                    <span class="chevron">▶</span> 🎯 GOAL — What do you want to achieve?
+                </div>
+                <div class="grow-body" id="dg_goal">
+                    <div class="grow-guide">
+                        <strong>Guiding questions:</strong>
+                        <ul>
+                            <li>Which LMS competencies require the most development?</li>
+                            <li>What would successful performance as LMS Administrator look like?</li>
+                            <li>What would you like to achieve by 30 June 2026?</li>
+                            <li>Which responsibilities do you want to perform independently?</li>
+                        </ul>
+                    </div>
+                    <label>My Reflection</label>
+                    <textarea class="grow-textarea" id="dg_goal_text" placeholder="Describe your goals for this coaching intervention..."></textarea>
+                </div>
+            </div>
+
+            <div class="grow-stage">
+                <div class="grow-header" onclick="toggleAcc(this,'dg_reality')">
+                    <span class="chevron">▶</span> 🔍 REALITY — Where are you now?
+                </div>
+                <div class="grow-body" id="dg_reality">
+                    <div class="grow-guide">
+                        <strong>Guiding questions:</strong>
+                        <ul>
+                            <li>What ICT and Moodle experience do you already possess?</li>
+                            <li>Which LMS tasks can you currently perform confidently?</li>
+                            <li>Which tasks currently require guidance or support?</li>
+                            <li>What development needs emerged from your self-assessment?</li>
+                        </ul>
+                    </div>
+                    <label>My Reflection</label>
+                    <textarea class="grow-textarea" id="dg_reality_text" placeholder="Describe your current situation and starting point..."></textarea>
+                </div>
+            </div>
+
+            <div class="grow-stage">
+                <div class="grow-header" onclick="toggleAcc(this,'dg_options')">
+                    <span class="chevron">▶</span> 💡 OPTIONS — How can you develop?
+                </div>
+                <div class="grow-body" id="dg_options">
+                    <div class="grow-guide">
+                        <strong>Guiding questions:</strong>
+                        <ul>
+                            <li>What support can your coach and colleagues provide?</li>
+                            <li>Which practical workplace tasks will help build competence?</li>
+                            <li>What resources, manuals or guides should you use?</li>
+                            <li>Who could you observe or work alongside?</li>
+                            <li>What opportunities exist for practice and feedback?</li>
+                        </ul>
+                    </div>
+                    <label>My Reflection</label>
+                    <textarea class="grow-textarea" id="dg_options_text" placeholder="Identify development strategies and opportunities..."></textarea>
+                </div>
+            </div>
+
+            <div class="grow-stage">
+                <div class="grow-header" onclick="toggleAcc(this,'dg_forward')">
+                    <span class="chevron">▶</span> 🚀 WAY FORWARD — What actions will you take?
+                </div>
+                <div class="grow-body" id="dg_forward">
+                    <div class="grow-guide">
+                        <strong>Guiding questions:</strong>
+                        <ul>
+                            <li>What specific actions will be completed before the next session?</li>
+                            <li>What evidence will demonstrate progress?</li>
+                            <li>What support is required from your coach?</li>
+                            <li>What timelines will be followed?</li>
+                            <li>How will success be measured at the end of the programme?</li>
+                        </ul>
+                    </div>
+                    <label>My Action Plan</label>
+                    <textarea class="grow-textarea" id="dg_forward_text" placeholder="List your committed actions and timelines..."></textarea>
+                </div>
+            </div>
+
+            <div class="save-row">
+                <button class="nav-btn" onclick="saveGrow('david')">💾 Save GROW Plan</button>
+                <span class="save-status" id="david_grow_status"></span>
+            </div>
+            <div style="text-align:center;margin-top:8px;">
+                <button class="back-top-btn" onclick="scrollToTop()">↑ Back to Top</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── COACHING SCHEDULE ── -->
+    <div id="d-schedule" class="david-section" style="display:none;">
+        <h2 class="section-heading">📅 Planned Coaching Programme — David Oliphant</h2>
+        <div class="info-box">Eight structured coaching sessions are planned from 2 June to 30 June 2026. Click each session to view objectives, activities and reflection space.</div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'ds1')">
+                <span>Session 1 &nbsp;·&nbsp; LMS Orientation</span>
+                <span class="session-date">2 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="ds1">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Introduce David to the Connect@CTLI Moodle environment. Establish coaching relationship and agree on the coaching contract. Orientate David to the LMS Administrator interface and core navigation.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Tour of the Moodle Admin dashboard</li>
+                    <li>Review of key menus: Site Administration, Users, Courses</li>
+                    <li>Introduction to the coaching programme structure</li>
+                    <li>Sign coaching contract and agree goals</li>
+                </ul>
+                <label>Session Reflection (David)</label>
+                <textarea class="grow-textarea" id="ds1_reflect" placeholder="What did I learn today? What surprised me? What do I want to explore further?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('ds1')">💾 Save Reflection</button>
+                    <span class="save-status" id="ds1_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'ds2')">
+                <span>Session 2 &nbsp;·&nbsp; User Administration</span>
+                <span class="session-date">4 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="ds2">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop competence in user account creation, editing and bulk user management. Understand user roles and permissions within the LMS.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Create individual user accounts under supervision</li>
+                    <li>Explore user roles: Student, Teacher, Manager, Admin</li>
+                    <li>Perform bulk user upload using CSV</li>
+                    <li>Reset user passwords and manage profile fields</li>
+                </ul>
+                <label>Session Reflection (David)</label>
+                <textarea class="grow-textarea" id="ds2_reflect" placeholder="What did I learn today? What challenged me? What will I practise independently?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('ds2')">💾 Save Reflection</button>
+                    <span class="save-status" id="ds2_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'ds3')">
+                <span>Session 3 &nbsp;·&nbsp; Enrolments</span>
+                <span class="session-date">9 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="ds3">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop competence in manual and automated enrolments. Understand cohort sync, self-enrolment and enrolment keys.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Manual enrolment of users into courses</li>
+                    <li>Set up self-enrolment with enrolment keys</li>
+                    <li>Configure cohort synchronisation</li>
+                    <li>Manage enrolment periods and suspension</li>
+                </ul>
+                <label>Session Reflection (David)</label>
+                <textarea class="grow-textarea" id="ds3_reflect" placeholder="What enrolment methods did I practise? What questions do I still have?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('ds3')">💾 Save Reflection</button>
+                    <span class="save-status" id="ds3_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'ds4')">
+                <span>Session 4 &nbsp;·&nbsp; Reporting</span>
+                <span class="session-date">11 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="ds4">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop confidence in generating and interpreting LMS reports. Understand activity completion, course completion and user activity reports.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Generate activity completion reports</li>
+                    <li>Access and interpret the log report</li>
+                    <li>Export data to spreadsheet for analysis</li>
+                    <li>Configure course completion conditions</li>
+                </ul>
+                <label>Session Reflection (David)</label>
+                <textarea class="grow-textarea" id="ds4_reflect" placeholder="Which reports will be most useful in my role? What did I find complex?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('ds4')">💾 Save Reflection</button>
+                    <span class="save-status" id="ds4_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'ds5')">
+                <span>Session 5 &nbsp;·&nbsp; Calendar Management</span>
+                <span class="session-date">16 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="ds5">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop competence in managing the Moodle calendar, scheduling events and configuring notifications for staff and participants.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Create site-wide and course-specific calendar events</li>
+                    <li>Configure event types and visibility</li>
+                    <li>Set up automated reminder notifications</li>
+                    <li>Link calendar events to course activities</li>
+                </ul>
+                <label>Session Reflection (David)</label>
+                <textarea class="grow-textarea" id="ds5_reflect" placeholder="How will I use the calendar to support participants? What did I learn?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('ds5')">💾 Save Reflection</button>
+                    <span class="save-status" id="ds5_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'ds6')">
+                <span>Session 6 &nbsp;·&nbsp; Course Development</span>
+                <span class="session-date">18 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="ds6">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop foundational course-building skills including activity and resource creation, course settings and backup/restore.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Create a new course and configure settings</li>
+                    <li>Add resources: files, pages, URLs</li>
+                    <li>Add activities: forums, assignments, quizzes</li>
+                    <li>Perform course backup and restore</li>
+                </ul>
+                <label>Session Reflection (David)</label>
+                <textarea class="grow-textarea" id="ds6_reflect" placeholder="What course-building skills did I develop? What will I practise next?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('ds6')">💾 Save Reflection</button>
+                    <span class="save-status" id="ds6_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'ds7')">
+                <span>Session 7 &nbsp;·&nbsp; Troubleshooting &amp; User Support</span>
+                <span class="session-date">23 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="ds7">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Build confidence in responding to common LMS support queries and troubleshooting typical user problems independently.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Practise resolving common login and access issues</li>
+                    <li>Respond to simulated support requests</li>
+                    <li>Navigate Moodle documentation and community forums</li>
+                    <li>Develop a personal troubleshooting reference guide</li>
+                </ul>
+                <label>Session Reflection (David)</label>
+                <textarea class="grow-textarea" id="ds7_reflect" placeholder="What support scenarios did I practise? What do I still need to develop?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('ds7')">💾 Save Reflection</button>
+                    <span class="save-status" id="ds7_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'ds8')">
+                <span>Session 8 &nbsp;·&nbsp; Final Assessment &amp; Evaluation</span>
+                <span class="session-date">30 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="ds8">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Conduct a final competency assessment, review progress against initial goals, celebrate achievements and plan ongoing professional development.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Complete final competency self-assessment</li>
+                    <li>Review GROW planner and original goals</li>
+                    <li>Coach and coachee reflection on the coaching journey</li>
+                    <li>Agree on ongoing learning and support plan</li>
+                </ul>
+                <label>Final Reflection (David)</label>
+                <textarea class="grow-textarea" id="ds8_reflect" placeholder="How have I grown through this coaching programme? What are my key achievements and next steps?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('ds8')">💾 Save Reflection</button>
+                    <span class="save-status" id="ds8_status"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── REFLECTION JOURNAL ── -->
+    <div id="d-journal" class="david-section" style="display:none;">
+        <h2 class="section-heading">📓 Reflection Journal — David Oliphant</h2>
+        <div class="card">
+            <div class="card-title">Add a New Journal Entry</div>
+            <div style="margin-bottom:14px;">
+                <label>Date</label>
+                <input type="date" id="d_journal_date" style="border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-family:Inter;font-size:.9rem;color:var(--navy);width:100%;max-width:220px;">
+            </div>
+            <div style="margin-bottom:14px;">
+                <label>Reflection</label>
+                <textarea class="grow-textarea" id="d_journal_text" placeholder="What did I learn today? What challenges did I face? What support do I need? What will I do differently?"></textarea>
+            </div>
+            <div style="margin-bottom:14px;">
+                <label>Tags (select all that apply)</label>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Learning" id="jt1"> Learning</label>
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Challenge" id="jt2"> Challenge</label>
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Support needed" id="jt3"> Support needed</label>
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Progress" id="jt4"> Progress</label>
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Action taken" id="jt5"> Action taken</label>
+                </div>
+            </div>
+            <button class="nav-btn" onclick="addJournalEntry('david')">➕ Add Entry</button>
+        </div>
+        <div id="d_journal_entries"></div>
+    </div>
+
+    <!-- ── PROGRESS DASHBOARD ── -->
+    <div id="d-dashboard" class="david-section" style="display:none;">
+        <h2 class="section-heading">📈 Progress Dashboard — David Oliphant</h2>
+
+        <div class="card">
+            <div class="card-title">Competency Development Tracker</div>
+            <div class="card-text" style="margin-bottom:16px;">Update your current confidence rating for each competency to track your growth over the coaching programme.</div>
+            <div class="progress-grid">
+                <div class="progress-item">
+                    <div class="progress-label">User Administration</div>
+                    <input type="range" min="0" max="100" value="20" id="prog_ua" oninput="updateBar('prog_ua','bar_ua','pct_ua')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar_ua" style="width:20%"></div></div>
+                    <div class="progress-pct" id="pct_ua">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">Reporting</div>
+                    <input type="range" min="0" max="100" value="20" id="prog_rep" oninput="updateBar('prog_rep','bar_rep','pct_rep')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar_rep" style="width:20%"></div></div>
+                    <div class="progress-pct" id="pct_rep">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">Calendar Management</div>
+                    <input type="range" min="0" max="100" value="20" id="prog_cal" oninput="updateBar('prog_cal','bar_cal','pct_cal')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar_cal" style="width:20%"></div></div>
+                    <div class="progress-pct" id="pct_cal">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">Course Development</div>
+                    <input type="range" min="0" max="100" value="20" id="prog_crs" oninput="updateBar('prog_crs','bar_crs','pct_crs')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar_crs" style="width:20%"></div></div>
+                    <div class="progress-pct" id="pct_crs">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">User Support</div>
+                    <input type="range" min="0" max="100" value="20" id="prog_sup" oninput="updateBar('prog_sup','bar_sup','pct_sup')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar_sup" style="width:20%"></div></div>
+                    <div class="progress-pct" id="pct_sup">20%</div>
+                </div>
+            </div>
+            <div class="save-row" style="margin-top:16px;">
+                <button class="nav-btn" onclick="saveDashboard('david')">💾 Save Progress</button>
+                <span class="save-status" id="david_dash_status"></span>
+            </div>
+            <div style="text-align:center;margin-top:8px;">
+                <button class="back-top-btn" onclick="scrollToTop()">↑ Back to Top</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Coaching Sessions Progress</div>
+            <table>
+                <tr><th>Session</th><th>Topic</th><th>Date</th><th>Status</th></tr>
+                <tr><td>1</td><td>LMS Orientation</td><td>2 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>2</td><td>User Administration</td><td>4 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>3</td><td>Enrolments</td><td>9 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>4</td><td>Reporting</td><td>11 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>5</td><td>Calendar Management</td><td>16 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>6</td><td>Course Development</td><td>18 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>7</td><td>Troubleshooting &amp; User Support</td><td>23 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>8</td><td>Final Assessment</td><td>30 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+            </table>
+        </div>
+
+    </div>
 </div>
 
-<div class="card-text">
-Rate your confidence in each competency area.
-</div>
-
-<br>
-
-<table style="width:100%;border-collapse:collapse;">
-
-<tr style="background:#f2f4f9;">
-<th style="padding:10px;text-align:left;">Competency</th>
-<th style="padding:10px;text-align:left;">Rating</th>
-</tr>
-
-<tr>
-<td style="padding:10px;">User Administration</td>
-<td style="padding:10px;">
-<select id="ua">
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<select id="ua">
-</td>
-</tr>
-
-<tr>
-<td style="padding:10px;">Reporting</td>
-<td style="padding:10px;">
-<select id="reporting">
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<select id="reporting">
-</td>
-</tr>
-
-<tr>
-<td style="padding:10px;">Calendar Management</td>
-<td style="padding:10px;">
-<select id="calendar">
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<select id="calendar">
-</td>
-</tr>
-
-<tr>
-<td style="padding:10px;">Course Development</td>
-<td style="padding:10px;">
-<select id="course">
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<select id="course">
-</td>
-</tr>
-
-<tr>
-<td style="padding:10px;">User Support</td>
-<td style="padding:10px;">
-<select id="support">
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<select id="support">
-</td>
-</tr>
-
-</table>
-<br>
-
-<button class="nav-btn"
-onclick="calculateDavidNeeds()">
-Analyse Development Needs
-</button>
-
-<div id="davidResults"
-style="margin-top:20px;">
-</div>
-</div>
-<div class="card">
-
-<div class="card-title">
-🎯 GROW Coaching Planner
-</div>
-
-<div class="card-text" style="margin-bottom:20px;">
-
-The GROW coaching model will guide your development as you transition into the LMS Administrator role.
-
-Use the development needs identified through your Skills Gap Analysis to inform your reflections and action planning.
-
-</div>
-
-<!-- GOAL -->
-
-<div class="grow-stage">
-
-<div class="grow-header accordion-toggle"
-onclick="toggleAccordion('goalContent')">
-▶ 🎯 GOAL
-</div>
-
-<div class="grow-body open"
-id="goalContent">
-
-<div class="grow-guide">
-
-<strong>What do you want to achieve?</strong>
-
-<br><br>
-
-Consider:
-
-<ul style="margin-left:20px; margin-top:10px;">
-<li>Which LMS competencies require the most development?</li>
-<li>What would successful performance as LMS Administrator look like?</li>
-<li>What would you like to achieve by 30 June?</li>
-<li>Which responsibilities do you want to perform independently?</li>
-</ul>
-
-</div>
-
-<label><strong>My Reflection</strong></label>
-
-<textarea
-class="grow-textarea"
-id="goalDavid">
-</textarea>
-
-</div>
-
-</div>
-
-<!-- REALITY -->
-
-<div class="grow-stage">
-
-<div class="grow-header accordion-toggle"
-onclick="toggleAccordion('realityContent')">
-▶ 🔍 REALITY
-</div>
-
-<div class="grow-body accordion-content"
-id="realityContent">
-
-<div class="grow-guide">
-
-<strong>Where are you now?</strong>
-
-<br><br>
-
-Consider:
-
-<ul style="margin-left:20px; margin-top:10px;">
-<li>What ICT and Moodle experience do you already possess?</li>
-<li>Which LMS tasks can you perform confidently?</li>
-<li>Which tasks currently require support?</li>
-<li>What development needs emerged from your assessment?</li>
-</ul>
-
-</div>
-
-<label><strong>My Reflection</strong></label>
-
-<textarea
-class="grow-textarea"
-id="realityDavid">
-</textarea>
-
-</div>
-
-</div>
-
-<!-- OPTIONS -->
-
-<div class="grow-stage">
-
-<div class="grow-header accordion-toggle"
-onclick="toggleAccordion('optionsContent')">
-▶ 💡 OPTIONS
-</div>
-
-<div class="grow-body"
-id="optionsContent">
-
-<div class="grow-guide">
-
-<strong>How can you develop?</strong>
-
-<br><br>
-
-Consider:
-
-<ul style="margin-left:20px; margin-top:10px;">
-<li>What support can your coach provide?</li>
-<li>Which practical workplace tasks will help build competence?</li>
-<li>What resources, manuals or guides should you use?</li>
-<li>Who could you observe or work alongside?</li>
-<li>What opportunities exist for practice and feedback?</li>
-</ul>
-
-</div>
-
-<label><strong>My Reflection</strong></label>
-
-<textarea
-class="grow-textarea"
-id="optionsDavid">
-</textarea>
-
-</div>
-
-</div>
-
-<!-- WAY FORWARD -->
-
-<div class="grow-stage">
-
-<div class="grow-header accordion-toggle"
-onclick="toggleAccordion('forwardContent')">
-▶ 🚀 WAY FORWARD
-</div>
-
-<div class="grow-body"
-id="forwardContent">
-
-<div class="grow-guide">
-
-<strong>What actions will you take?</strong>
-
-<br><br>
-
-Consider:
-
-<ul style="margin-left:20px; margin-top:10px;">
-<li>What actions will be completed before the next coaching session?</li>
-<li>What evidence will demonstrate progress?</li>
-<li>What support is required?</li>
-<li>What timelines will be followed?</li>
-<li>How will success be measured?</li>
-</ul>
-
-</div>
-
-<label><strong>My Action Plan</strong></label>
-
-<textarea
-class="grow-textarea"
-id="forwardDavid">
-</textarea>
-
-</div>
-
-</div>
-
-<div style="text-align:right; margin-top:20px;">
-
-<button class="nav-btn"
-onclick="saveDavidGrow()">
-💾 Save GROW Plan
-</button>
-
-<span id="growStatusDavid"
-style="margin-left:15px;color:#8fad15;font-weight:600;">
-</span>
-
-</div>
-
-</div>
-
-<!-- BOMIKAZI -->
-
+<!-- ══════════════════════════════════════════
+     BOMIKAZI TAB
+══════════════════════════════════════════ -->
 <div id="bomikazi" class="tab-content">
 
-<h2 class="section-heading">
-Bomikazi Majikijela Coaching Workspace
-</h2>
+    <div class="info-box">
+        <strong>Bomikazi Majikijela</strong> returns from maternity leave on 9 June 2026 and will assume the Office Manager role within the PDD Unit. Coaching commences 10 June 2026 to support her transition into this position.
+    </div>
 
-<div class="coming-soon">
-Bomikazi coaching tools will be added here.
+    <!-- ── SECTION TABS for Bomikazi ── -->
+    <div class="nav-tabs" style="margin-bottom:20px;">
+        <button class="nav-btn active" onclick="showSection('b-dna','bomikazi',this)">📊 Needs Analysis</button>
+        <button class="nav-btn" onclick="showSection('b-grow','bomikazi',this)">🎯 GROW Planner</button>
+        <button class="nav-btn" onclick="showSection('b-schedule','bomikazi',this)">📅 Coaching Schedule</button>
+        <button class="nav-btn" onclick="showSection('b-journal','bomikazi',this)">📓 Reflection Journal</button>
+        <button class="nav-btn" onclick="showSection('b-dashboard','bomikazi',this)">📈 Progress Dashboard</button>
+    </div>
+
+    <!-- ── DEVELOPMENT NEEDS ANALYSIS ── -->
+    <div id="b-dna" class="bomikazi-section">
+        <h2 class="section-heading">📊 Development Needs Analysis</h2>
+        <div class="card">
+            <div class="card-title">Competency Self-Assessment</div>
+            <div class="card-text" style="margin-bottom:16px;">Rate your current confidence in each Office Manager competency area. 1 = No experience · 5 = Fully confident.</div>
+            <table>
+                <tr><th>Competency Area</th><th>Self-Rating (1–5)</th><th>Notes</th></tr>
+                <tr>
+                    <td>Attendance Administration</td>
+                    <td><select id="b_att"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="b_att_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>Leave Administration</td>
+                    <td><select id="b_leave"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="b_leave_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>Records Management</td>
+                    <td><select id="b_rec"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="b_rec_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>Document Control</td>
+                    <td><select id="b_doc"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="b_doc_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>Workflow Coordination</td>
+                    <td><select id="b_wf"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="b_wf_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>Reporting</td>
+                    <td><select id="b_rep"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="b_rep_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+                <tr>
+                    <td>Systems Usage</td>
+                    <td><select id="b_sys"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>
+                    <td><input type="text" id="b_sys_note" placeholder="Optional notes" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;font-family:Inter;font-size:.85rem;color:var(--navy);"></td>
+                </tr>
+            </table>
+            <br>
+            <button class="nav-btn" onclick="calcBomikazi()">Analyse Development Needs</button>
+            <div id="bomikaziResults"></div>
+            <div style="text-align:center;margin-top:16px;">
+                <button class="back-top-btn" onclick="scrollToTop()">↑ Back to Top</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── GROW PLANNER ── -->
+    <div id="b-grow" class="bomikazi-section" style="display:none;">
+        <h2 class="section-heading">🎯 GROW Coaching Planner — Bomikazi Majikijela</h2>
+        <div class="card">
+            <div class="card-text" style="margin-bottom:20px;">
+                Use your development needs analysis to inform your reflections below. Click each section heading to open it.
+            </div>
+
+            <div class="grow-stage">
+                <div class="grow-header" onclick="toggleAcc(this,'bg_goal')">
+                    <span class="chevron">▶</span> 🎯 GOAL — What do you want to achieve?
+                </div>
+                <div class="grow-body" id="bg_goal">
+                    <div class="grow-guide">
+                        <strong>Guiding questions:</strong>
+                        <ul>
+                            <li>What does success look like in the Office Manager role?</li>
+                            <li>Which competencies are most critical to develop first?</li>
+                            <li>What would you like to achieve independently by 30 June 2026?</li>
+                            <li>How will this role support your career development?</li>
+                        </ul>
+                    </div>
+                    <label>My Reflection</label>
+                    <textarea class="grow-textarea" id="bg_goal_text" placeholder="Describe your goals for this coaching intervention..."></textarea>
+                </div>
+            </div>
+
+            <div class="grow-stage">
+                <div class="grow-header" onclick="toggleAcc(this,'bg_reality')">
+                    <span class="chevron">▶</span> 🔍 REALITY — Where are you now?
+                </div>
+                <div class="grow-body" id="bg_reality">
+                    <div class="grow-guide">
+                        <strong>Guiding questions:</strong>
+                        <ul>
+                            <li>What office administration experience do you already have?</li>
+                            <li>What systems and processes are you familiar with?</li>
+                            <li>What has changed in the unit during your maternity leave?</li>
+                            <li>Which areas feel most unfamiliar or challenging right now?</li>
+                        </ul>
+                    </div>
+                    <label>My Reflection</label>
+                    <textarea class="grow-textarea" id="bg_reality_text" placeholder="Describe your current situation and starting point..."></textarea>
+                </div>
+            </div>
+
+            <div class="grow-stage">
+                <div class="grow-header" onclick="toggleAcc(this,'bg_options')">
+                    <span class="chevron">▶</span> 💡 OPTIONS — How can you develop?
+                </div>
+                <div class="grow-body" id="bg_options">
+                    <div class="grow-guide">
+                        <strong>Guiding questions:</strong>
+                        <ul>
+                            <li>What training or orientation is available?</li>
+                            <li>Who can you shadow or consult within the unit?</li>
+                            <li>What policies, procedures or manuals should you study?</li>
+                            <li>Which tasks can you begin practising immediately?</li>
+                        </ul>
+                    </div>
+                    <label>My Reflection</label>
+                    <textarea class="grow-textarea" id="bg_options_text" placeholder="Identify development strategies and opportunities..."></textarea>
+                </div>
+            </div>
+
+            <div class="grow-stage">
+                <div class="grow-header" onclick="toggleAcc(this,'bg_forward')">
+                    <span class="chevron">▶</span> 🚀 WAY FORWARD — What actions will you take?
+                </div>
+                <div class="grow-body" id="bg_forward">
+                    <div class="grow-guide">
+                        <strong>Guiding questions:</strong>
+                        <ul>
+                            <li>What actions will you commit to before the next session?</li>
+                            <li>What evidence will you collect to demonstrate progress?</li>
+                            <li>What support do you need from your coach?</li>
+                            <li>How will you manage the transition alongside your daily responsibilities?</li>
+                        </ul>
+                    </div>
+                    <label>My Action Plan</label>
+                    <textarea class="grow-textarea" id="bg_forward_text" placeholder="List your committed actions and timelines..."></textarea>
+                </div>
+            </div>
+
+            <div class="save-row">
+                <button class="nav-btn" onclick="saveGrow('bomikazi')">💾 Save GROW Plan</button>
+                <span class="save-status" id="bomikazi_grow_status"></span>
+            </div>
+            <div style="text-align:center;margin-top:8px;">
+                <button class="back-top-btn" onclick="scrollToTop()">↑ Back to Top</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── COACHING SCHEDULE ── -->
+    <div id="b-schedule" class="bomikazi-section" style="display:none;">
+        <h2 class="section-heading">📅 Planned Coaching Programme — Bomikazi Majikijela</h2>
+        <div class="info-box">Seven structured coaching sessions are planned from 10 June to 30 June 2026, commencing the day after Bomikazi's return from maternity leave.</div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'bs1')">
+                <span>Session 1 &nbsp;·&nbsp; Role Orientation</span>
+                <span class="session-date">10 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="bs1">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Welcome Bomikazi back from maternity leave. Orientate her to her new responsibilities as Office Manager. Establish the coaching relationship and agree on the coaching contract.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Overview of the Office Manager role and key responsibilities</li>
+                    <li>Tour of relevant systems, filing structures and workflows</li>
+                    <li>Introduction to the coaching programme structure</li>
+                    <li>Sign coaching contract and agree on initial goals</li>
+                </ul>
+                <label>Session Reflection (Bomikazi)</label>
+                <textarea class="grow-textarea" id="bs1_reflect" placeholder="What did I learn about my new role? What feels familiar? What feels new?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('bs1')">💾 Save Reflection</button>
+                    <span class="save-status" id="bs1_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'bs2')">
+                <span>Session 2 &nbsp;·&nbsp; Attendance Registers</span>
+                <span class="session-date">12 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="bs2">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop competence in managing daily and weekly attendance registers for the PDD Unit in accordance with WCED requirements.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Review attendance register templates and procedures</li>
+                    <li>Practise completing and submitting registers</li>
+                    <li>Understand timelines and submission requirements</li>
+                    <li>Identify who to contact for anomalies or queries</li>
+                </ul>
+                <label>Session Reflection (Bomikazi)</label>
+                <textarea class="grow-textarea" id="bs2_reflect" placeholder="What did I learn about attendance administration? What questions do I still have?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('bs2')">💾 Save Reflection</button>
+                    <span class="save-status" id="bs2_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'bs3')">
+                <span>Session 3 &nbsp;·&nbsp; Leave Administration</span>
+                <span class="session-date">17 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="bs3">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop confidence in processing leave applications, maintaining leave records and liaising with HR in accordance with WCED leave policy.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Review WCED leave policy and types of leave</li>
+                    <li>Practise processing leave application forms</li>
+                    <li>Maintain the unit leave schedule and balance records</li>
+                    <li>Understand escalation procedures for leave queries</li>
+                </ul>
+                <label>Session Reflection (Bomikazi)</label>
+                <textarea class="grow-textarea" id="bs3_reflect" placeholder="What leave processes did I practise? What do I need to clarify?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('bs3')">💾 Save Reflection</button>
+                    <span class="save-status" id="bs3_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'bs4')">
+                <span>Session 4 &nbsp;·&nbsp; Records Management</span>
+                <span class="session-date">19 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="bs4">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop competence in managing physical and digital records in line with the unit filing system and WCED records management requirements.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Review the unit filing plan and naming conventions</li>
+                    <li>Practise filing, retrieving and archiving documents</li>
+                    <li>Understand retention schedules and disposal procedures</li>
+                    <li>Navigate the digital shared drive structure</li>
+                </ul>
+                <label>Session Reflection (Bomikazi)</label>
+                <textarea class="grow-textarea" id="bs4_reflect" placeholder="What records management systems did I explore? What will I improve?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('bs4')">💾 Save Reflection</button>
+                    <span class="save-status" id="bs4_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'bs5')">
+                <span>Session 5 &nbsp;·&nbsp; Workflow Coordination</span>
+                <span class="session-date">24 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="bs5">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop competence in coordinating administrative workflows, managing correspondence and supporting the unit's operational functions.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Map the key administrative workflows in the unit</li>
+                    <li>Practise drafting and routing correspondence</li>
+                    <li>Manage meeting scheduling and minute-taking</li>
+                    <li>Prioritise competing administrative tasks</li>
+                </ul>
+                <label>Session Reflection (Bomikazi)</label>
+                <textarea class="grow-textarea" id="bs5_reflect" placeholder="What workflow responsibilities did I develop? What is still challenging?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('bs5')">💾 Save Reflection</button>
+                    <span class="save-status" id="bs5_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'bs6')">
+                <span>Session 6 &nbsp;·&nbsp; Systems Training</span>
+                <span class="session-date">26 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="bs6">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop competence in the key systems used in the PDD Unit, including PERSAL, WCED online platforms and office productivity tools.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Navigate the WCED administrative systems relevant to the role</li>
+                    <li>Practise generating standard reports and returns</li>
+                    <li>Use shared calendars and scheduling tools</li>
+                    <li>Identify system contacts for technical support</li>
+                </ul>
+                <label>Session Reflection (Bomikazi)</label>
+                <textarea class="grow-textarea" id="bs6_reflect" placeholder="Which systems am I most confident with? Which need further practice?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('bs6')">💾 Save Reflection</button>
+                    <span class="save-status" id="bs6_status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stage">
+            <div class="session-header" onclick="toggleSession(this,'bs7')">
+                <span>Session 7 &nbsp;·&nbsp; Final Assessment &amp; Evaluation</span>
+                <span class="session-date">30 June 2026</span>
+                <span class="chevron">▶</span>
+            </div>
+            <div class="session-body" id="bs7">
+                <div class="grow-guide"><strong>Session Objectives:</strong> Conduct a final competency review, reflect on the coaching journey and plan ongoing development as Bomikazi settles into the Office Manager role.</div>
+                <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
+                <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
+                    <li>Complete final competency self-assessment</li>
+                    <li>Review GROW planner and original goals</li>
+                    <li>Coach and coachee reflection on the coaching journey</li>
+                    <li>Agree on ongoing learning and support requirements</li>
+                </ul>
+                <label>Final Reflection (Bomikazi)</label>
+                <textarea class="grow-textarea" id="bs7_reflect" placeholder="How have I grown through this programme? What are my proudest achievements and my next steps?"></textarea>
+                <div class="save-row" style="margin-top:12px;">
+                    <button class="nav-btn" onclick="saveSession('bs7')">💾 Save Reflection</button>
+                    <span class="save-status" id="bs7_status"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── REFLECTION JOURNAL ── -->
+    <div id="b-journal" class="bomikazi-section" style="display:none;">
+        <h2 class="section-heading">📓 Reflection Journal — Bomikazi Majikijela</h2>
+        <div class="card">
+            <div class="card-title">Add a New Journal Entry</div>
+            <div style="margin-bottom:14px;">
+                <label>Date</label>
+                <input type="date" id="b_journal_date" style="border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-family:Inter;font-size:.9rem;color:var(--navy);width:100%;max-width:220px;">
+            </div>
+            <div style="margin-bottom:14px;">
+                <label>Reflection</label>
+                <textarea class="grow-textarea" id="b_journal_text" placeholder="What did I learn today? What challenges did I face? What support do I need? What will I do differently?"></textarea>
+            </div>
+            <div style="margin-bottom:14px;">
+                <label>Tags (select all that apply)</label>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Learning" id="bjt1"> Learning</label>
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Challenge" id="bjt2"> Challenge</label>
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Support needed" id="bjt3"> Support needed</label>
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Progress" id="bjt4"> Progress</label>
+                    <label style="font-weight:400;color:var(--muted);"><input type="checkbox" value="Action taken" id="bjt5"> Action taken</label>
+                </div>
+            </div>
+            <button class="nav-btn" onclick="addJournalEntry('bomikazi')">➕ Add Entry</button>
+        </div>
+        <div id="b_journal_entries"></div>
+    </div>
+
+    <!-- ── PROGRESS DASHBOARD ── -->
+    <div id="b-dashboard" class="bomikazi-section" style="display:none;">
+        <h2 class="section-heading">📈 Progress Dashboard — Bomikazi Majikijela</h2>
+
+        <div class="card">
+            <div class="card-title">Competency Development Tracker</div>
+            <div class="card-text" style="margin-bottom:16px;">Update your current confidence rating for each competency to track your growth over the coaching programme.</div>
+            <div class="progress-grid">
+                <div class="progress-item">
+                    <div class="progress-label">Attendance Administration</div>
+                    <input type="range" min="0" max="100" value="20" id="bp_att" oninput="updateBar('bp_att','bbar_att','bpct_att')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bbar_att" style="width:20%"></div></div>
+                    <div class="progress-pct" id="bpct_att">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">Leave Administration</div>
+                    <input type="range" min="0" max="100" value="20" id="bp_leave" oninput="updateBar('bp_leave','bbar_leave','bpct_leave')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bbar_leave" style="width:20%"></div></div>
+                    <div class="progress-pct" id="bpct_leave">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">Records Management</div>
+                    <input type="range" min="0" max="100" value="20" id="bp_rec" oninput="updateBar('bp_rec','bbar_rec','bpct_rec')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bbar_rec" style="width:20%"></div></div>
+                    <div class="progress-pct" id="bpct_rec">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">Document Control</div>
+                    <input type="range" min="0" max="100" value="20" id="bp_doc" oninput="updateBar('bp_doc','bbar_doc','bpct_doc')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bbar_doc" style="width:20%"></div></div>
+                    <div class="progress-pct" id="bpct_doc">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">Workflow Coordination</div>
+                    <input type="range" min="0" max="100" value="20" id="bp_wf" oninput="updateBar('bp_wf','bbar_wf','bpct_wf')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bbar_wf" style="width:20%"></div></div>
+                    <div class="progress-pct" id="bpct_wf">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">Reporting</div>
+                    <input type="range" min="0" max="100" value="20" id="bp_rep" oninput="updateBar('bp_rep','bbar_rep','bpct_rep')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bbar_rep" style="width:20%"></div></div>
+                    <div class="progress-pct" id="bpct_rep">20%</div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">Systems Usage</div>
+                    <input type="range" min="0" max="100" value="20" id="bp_sys" oninput="updateBar('bp_sys','bbar_sys','bpct_sys')" style="width:100%;margin-bottom:6px;accent-color:var(--navy);">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bbar_sys" style="width:20%"></div></div>
+                    <div class="progress-pct" id="bpct_sys">20%</div>
+                </div>
+            </div>
+            <div class="save-row" style="margin-top:16px;">
+                <button class="nav-btn" onclick="saveDashboard('bomikazi')">💾 Save Progress</button>
+                <span class="save-status" id="bomikazi_dash_status"></span>
+            </div>
+            <div style="text-align:center;margin-top:8px;">
+                <button class="back-top-btn" onclick="scrollToTop()">↑ Back to Top</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Coaching Sessions Progress</div>
+            <table>
+                <tr><th>Session</th><th>Topic</th><th>Date</th><th>Status</th></tr>
+                <tr><td>1</td><td>Role Orientation</td><td>10 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>2</td><td>Attendance Registers</td><td>12 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>3</td><td>Leave Administration</td><td>17 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>4</td><td>Records Management</td><td>19 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>5</td><td>Workflow Coordination</td><td>24 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>6</td><td>Systems Training</td><td>26 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+                <tr><td>7</td><td>Final Assessment</td><td>30 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
+            </table>
+        </div>
+
+    </div>
 </div>
 
-</div>
-
-</div>
+</div><!-- /wrapper -->
 
 <script>
-function calculateDavidNeeds(){
 
-let high=[];
-let medium=[];
-
-const skills=[
-{
-name:'User Administration',
-value:Number(document.getElementById('ua').value)
-},
-{
-name:'Reporting',
-value:Number(document.getElementById('reporting').value)
-},
-{
-name:'Calendar Management',
-value:Number(document.getElementById('calendar').value)
-},
-{
-name:'Course Development',
-value:Number(document.getElementById('course').value)
-},
-{
-name:'User Support',
-value:Number(document.getElementById('support').value)
-}
-];
-
-skills.forEach(skill=>{
-
-if(skill.value<=2){
-high.push(skill.name);
-}
-else if(skill.value===3){
-medium.push(skill.name);
+/* ══ TAB NAVIGATION ══ */
+function showTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-tabs > .nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
 }
 
-});
-
-let html='';
-
-html+='<div class="card" style="margin-top:20px;">';
-
-html+='<h3 style="margin-bottom:15px;">Skills Gap Analysis Results</h3>';
-
-if(high.length>0){
-
-html+='<p><strong>🔴 High Priority Development Areas</strong></p>';
-html+='<ul>';
-
-high.forEach(item=>{
-html+='<li>'+item+'</li>';
-});
-
-html+='</ul><br>';
-
+/* ══ SUB-SECTION NAV (David / Bomikazi inner tabs) ══ */
+function showSection(sectionId, person, btn) {
+    document.querySelectorAll('.' + person + '-section').forEach(s => s.style.display = 'none');
+    document.getElementById(sectionId).style.display = 'block';
+    // Only update sibling nav-btn group
+    btn.closest('.nav-tabs').querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
 }
 
-if(medium.length>0){
-
-html+='<p><strong>🟡 Medium Priority Development Areas</strong></p>';
-
-html+='<ul>';
-
-medium.forEach(item=>{
-html+='<li>'+item+'</li>';
-});
-
-html+='</ul>';
-
+/* ══ GROW ACCORDION ══ */
+function toggleAcc(header, bodyId) {
+    const body = document.getElementById(bodyId);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    header.classList.toggle('open', !isOpen);
 }
 
-if(high.length===0 && medium.length===0){
-
-html+='<p>✅ No significant development needs identified.</p>';
-
+/* ══ SESSION ACCORDION ══ */
+function toggleSession(header, bodyId) {
+    const body = document.getElementById(bodyId);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    header.classList.toggle('open', !isOpen);
 }
 
-html+='</div>';
-
-document.getElementById('davidResults').innerHTML=html;
-
-}
-function toggleAccordion(id){
-
-const section = document.getElementById(id);
-
-if(section.classList.contains('open')){
-    section.classList.remove('open');
-}else{
-    section.classList.add('open');
+/* ══ SKILLS GAP — DAVID ══ */
+function calcDavid() {
+    const skills = [
+        { name:'User Administration',  val:+document.getElementById('d_ua').value },
+        { name:'Reporting',            val:+document.getElementById('d_rep').value },
+        { name:'Calendar Management',  val:+document.getElementById('d_cal').value },
+        { name:'Course Development',   val:+document.getElementById('d_crs').value },
+        { name:'User Support',         val:+document.getElementById('d_sup').value }
+    ];
+    renderGap('davidResults', skills);
 }
 
+/* ══ SKILLS GAP — BOMIKAZI ══ */
+function calcBomikazi() {
+    const skills = [
+        { name:'Attendance Administration', val:+document.getElementById('b_att').value },
+        { name:'Leave Administration',      val:+document.getElementById('b_leave').value },
+        { name:'Records Management',        val:+document.getElementById('b_rec').value },
+        { name:'Document Control',          val:+document.getElementById('b_doc').value },
+        { name:'Workflow Coordination',     val:+document.getElementById('b_wf').value },
+        { name:'Reporting',                 val:+document.getElementById('b_rep').value },
+        { name:'Systems Usage',             val:+document.getElementById('b_sys').value }
+    ];
+    renderGap('bomikaziResults', skills);
 }
-function showTab(tabId,button){
 
-document.querySelectorAll('.tab-content')
-.forEach(tab=>{
-tab.classList.remove('active');
-});
-
-document.querySelectorAll('.nav-btn')
-.forEach(btn=>{
-btn.classList.remove('active');
-});
-
-document.getElementById(tabId)
-.classList.add('active');
-
-button.classList.add('active');
-
+function renderGap(targetId, skills) {
+    const high   = skills.filter(s => s.val <= 2).map(s => s.name);
+    const medium = skills.filter(s => s.val === 3).map(s => s.name);
+    const good   = skills.filter(s => s.val >= 4).map(s => s.name);
+    let html = '<div class="card" style="margin-top:20px;">';
+    html += '<p style="font-weight:700;color:var(--navy);margin-bottom:14px;">Skills Gap Analysis Results</p>';
+    if (high.length) {
+        html += '<p style="color:var(--navy);font-weight:600;margin-bottom:6px;">🔴 High Priority Development Areas</p>';
+        html += '<ul style="margin-left:20px;color:var(--muted);margin-bottom:14px;line-height:1.8;">';
+        high.forEach(n => html += '<li>' + n + '</li>');
+        html += '</ul>';
+    }
+    if (medium.length) {
+        html += '<p style="color:var(--navy);font-weight:600;margin-bottom:6px;">🟡 Medium Priority Development Areas</p>';
+        html += '<ul style="margin-left:20px;color:var(--muted);margin-bottom:14px;line-height:1.8;">';
+        medium.forEach(n => html += '<li>' + n + '</li>');
+        html += '</ul>';
+    }
+    if (good.length) {
+        html += '<p style="color:var(--navy);font-weight:600;margin-bottom:6px;">🟢 Areas of Existing Strength</p>';
+        html += '<ul style="margin-left:20px;color:var(--muted);margin-bottom:14px;line-height:1.8;">';
+        good.forEach(n => html += '<li>' + n + '</li>');
+        html += '</ul>';
+    }
+    if (!high.length && !medium.length) {
+        html += '<p style="color:var(--muted);">✅ No significant development needs identified.</p>';
+    }
+    html += '</div>';
+    document.getElementById(targetId).innerHTML = html;
 }
+
+/* ══ SAVE GROW ══ */
+function saveGrow(person) {
+    const statusId = person + '_grow_status';
+    // Save to localStorage
+    const keys = person === 'david'
+        ? ['dg_goal_text','dg_reality_text','dg_options_text','dg_forward_text']
+        : ['bg_goal_text','bg_reality_text','bg_options_text','bg_forward_text'];
+    keys.forEach(k => {
+        const el = document.getElementById(k);
+        if (el) localStorage.setItem(k, el.value);
+    });
+    flashStatus(statusId, '✅ GROW Plan saved');
+}
+
+/* ══ SAVE SESSION ══ */
+function saveSession(sessionId) {
+    const el = document.getElementById(sessionId + '_reflect');
+    if (el) localStorage.setItem(sessionId + '_reflect', el.value);
+    flashStatus(sessionId + '_status', '✅ Reflection saved');
+}
+
+/* ══ SAVE DASHBOARD ══ */
+function saveDashboard(person) {
+    flashStatus(person + '_dash_status', '✅ Progress saved');
+}
+
+/* ══ JOURNAL ══ */
+const davidJournal = [];
+const bomikaziJournal = [];
+
+function addJournalEntry(person) {
+    const dateEl   = document.getElementById(person === 'david' ? 'd_journal_date' : 'b_journal_date');
+    const textEl   = document.getElementById(person === 'david' ? 'd_journal_text' : 'b_journal_text');
+    const tagIds   = person === 'david'
+        ? ['jt1','jt2','jt3','jt4','jt5']
+        : ['bjt1','bjt2','bjt3','bjt4','bjt5'];
+
+    const dateVal  = dateEl.value;
+    const textVal  = textEl.value.trim();
+    if (!textVal) { alert('Please enter a reflection before adding.'); return; }
+
+    const tags = tagIds.map(id => document.getElementById(id)).filter(cb => cb.checked).map(cb => cb.value);
+
+    const entry = { date: dateVal || 'No date', text: textVal, tags };
+    const journal = person === 'david' ? davidJournal : bomikaziJournal;
+    journal.unshift(entry);
+
+    renderJournal(person);
+    textEl.value = '';
+    dateEl.value = '';
+    tagIds.forEach(id => document.getElementById(id).checked = false);
+}
+
+function renderJournal(person) {
+    const journal = person === 'david' ? davidJournal : bomikaziJournal;
+    const container = document.getElementById(person === 'david' ? 'd_journal_entries' : 'b_journal_entries');
+    if (!journal.length) { container.innerHTML = ''; return; }
+    container.innerHTML = journal.map(e => `
+        <div class="journal-entry">
+            <div class="journal-date">${e.date}</div>
+            <div class="journal-text">${e.text.replace(/\n/g,'<br>')}</div>
+            ${e.tags.length ? '<div class="journal-tags">' + e.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' : ''}
+        </div>
+    `).join('');
+}
+
+/* ══ PROGRESS BARS ══ */
+function updateBar(sliderId, barId, pctId) {
+    const val = document.getElementById(sliderId).value;
+    document.getElementById(barId).style.width = val + '%';
+    document.getElementById(pctId).textContent = val + '%';
+}
+
+/* ══ RESTORE FROM LOCALSTORAGE ══ */
+function restoreAll() {
+    const growKeys = [
+        'dg_goal_text','dg_reality_text','dg_options_text','dg_forward_text',
+        'bg_goal_text','bg_reality_text','bg_options_text','bg_forward_text'
+    ];
+    const sessionKeys = [
+        'ds1_reflect','ds2_reflect','ds3_reflect','ds4_reflect',
+        'ds5_reflect','ds6_reflect','ds7_reflect','ds8_reflect',
+        'bs1_reflect','bs2_reflect','bs3_reflect','bs4_reflect',
+        'bs5_reflect','bs6_reflect','bs7_reflect'
+    ];
+    [...growKeys, ...sessionKeys].forEach(k => {
+        const el = document.getElementById(k);
+        const stored = localStorage.getItem(k);
+        if (el && stored) el.value = stored;
+    });
+}
+
+/* ══ FLASH STATUS ══ */
+function flashStatus(id, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    setTimeout(() => el.textContent = '', 3000);
+}
+
+/* ══ BACK TO TOP ══ */
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══ PDF EXPORT ══ */
+function exportPDF() {
+    // Set print date
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-ZA', { day:'2-digit', month:'long', year:'numeric' });
+    const el = document.getElementById('print_date');
+    if (el) el.textContent = dateStr;
+
+    // Make ALL sections visible for print
+    document.querySelectorAll('.david-section, .bomikazi-section').forEach(s => {
+        s.dataset.origDisplay = s.style.display;
+        s.style.display = 'block';
+    });
+    document.querySelectorAll('.grow-body, .session-body').forEach(b => {
+        b.dataset.origDisplay = b.style.display;
+        b.style.display = 'block';
+    });
+    document.querySelectorAll('.tab-content').forEach(t => {
+        t.dataset.origDisplay = t.style.display || '';
+        t.style.display = 'block';
+    });
+
+    // Print
+    window.print();
+
+    // Restore after print dialog closes
+    setTimeout(() => {
+        document.querySelectorAll('.david-section, .bomikazi-section').forEach(s => {
+            s.style.display = s.dataset.origDisplay || 'none';
+        });
+        document.querySelectorAll('.grow-body, .session-body').forEach(b => {
+            b.style.display = b.dataset.origDisplay || 'none';
+        });
+        document.querySelectorAll('.tab-content').forEach(t => {
+            t.style.display = t.dataset.origDisplay || '';
+        });
+        // Re-activate correct tab
+        document.getElementById('home').style.display = 'block';
+    }, 1000);
+}
+
+/* ══ INIT ══ */
+document.addEventListener('DOMContentLoaded', restoreAll);
 
 </script>
-
 </body>
 </html>
