@@ -297,16 +297,22 @@ The programme combines workplace learning, reflective practice, coaching convers
 
 </div>
 
-<!-- DAVID -->
+</div>
 
-<div id="david" class="tab-content">
+<!-- DASHBOARD -->
 
-<h2 class="section-heading">
-David Oliphant Coaching Workspace
-</h2>
+<div class="card">
 
-<div class="coming-soon">
-David coaching tools loading in Part 2...
+<div class="card-title">
+📈 Progress Dashboard
+</div>
+
+<div id="dashboardDavid">
+
+Progress data will appear here after completing the skills assessment.
+
+</div>
+
 </div>
 
 </div>
@@ -329,6 +335,117 @@ Bomikazi coaching tools loading in Part 3...
 
 <script>
 
+function calculateDavidNeeds(){
+
+let priorities=[];
+
+if(Number(document.getElementById('ua').value)<=2){
+priorities.push('User Administration');
+}
+
+if(Number(document.getElementById('reporting').value)<=2){
+priorities.push('Reporting');
+}
+
+if(Number(document.getElementById('calendar').value)<=2){
+priorities.push('Calendar Management');
+}
+
+if(Number(document.getElementById('course').value)<=2){
+priorities.push('Course Development');
+}
+
+if(Number(document.getElementById('support').value)<=2){
+priorities.push('User Support');
+}
+
+let html='<h3>Development Priorities</h3>';
+
+if(priorities.length===0){
+html+='<p>No immediate high priority development needs identified.</p>';
+}else{
+
+html+='<ul>';
+
+priorities.forEach(item=>{
+html+='<li>'+item+'</li>';
+});
+
+html+='</ul>';
+}
+
+document.getElementById('davidResults').innerHTML=html;
+
+document.getElementById('dashboardDavid').innerHTML=
+'<strong>Priority Areas:</strong><br><br>'+priorities.join('<br>');
+
+}
+
+function saveDavidGrow(){
+
+localStorage.setItem(
+'davidGoal',
+document.getElementById('goalDavid').value
+);
+
+localStorage.setItem(
+'davidReality',
+document.getElementById('realityDavid').value
+);
+
+localStorage.setItem(
+'davidOptions',
+document.getElementById('optionsDavid').value
+);
+
+localStorage.setItem(
+'davidForward',
+document.getElementById('forwardDavid').value
+);
+
+document.getElementById('growStatus').innerHTML='Saved';
+
+}
+
+function saveDavidReflection(){
+
+localStorage.setItem(
+'davidReflection',
+document.getElementById('reflectionDavid').value
+);
+
+document.getElementById('reflectionStatus').innerHTML='Saved';
+
+}
+
+window.onload=function(){
+
+if(localStorage.getItem('davidGoal')){
+document.getElementById('goalDavid').value=
+localStorage.getItem('davidGoal');
+}
+
+if(localStorage.getItem('davidReality')){
+document.getElementById('realityDavid').value=
+localStorage.getItem('davidReality');
+}
+
+if(localStorage.getItem('davidOptions')){
+document.getElementById('optionsDavid').value=
+localStorage.getItem('davidOptions');
+}
+
+if(localStorage.getItem('davidForward')){
+document.getElementById('forwardDavid').value=
+localStorage.getItem('davidForward');
+}
+
+if(localStorage.getItem('davidReflection')){
+document.getElementById('reflectionDavid').value=
+localStorage.getItem('davidReflection');
+}
+
+}
 function showTab(tabId,button){
 
 document.querySelectorAll('.tab-content')
