@@ -209,12 +209,13 @@ h1{
     user-select:none;
 }
 
-.accordion-content{
-    display:none !important;
+..grow-body{
+    display:none;
+    padding:18px;
 }
 
-.accordion-content.open{
-    display:block !important;
+.grow-body.open{
+    display:block;
 }
     body{
         padding:14px;
@@ -469,7 +470,7 @@ onclick="toggleAccordion('goalContent')">
 ▶ 🎯 GOAL
 </div>
 
-<div class="grow-body accordion-content"
+<div class="grow-body open"
 id="goalContent">
 
 <div class="grow-guide">
@@ -549,7 +550,7 @@ onclick="toggleAccordion('optionsContent')">
 ▶ 💡 OPTIONS
 </div>
 
-<div class="grow-body accordion-content"
+<div class="grow-body"
 id="optionsContent">
 
 <div class="grow-guide">
@@ -590,7 +591,7 @@ onclick="toggleAccordion('forwardContent')">
 ▶ 🚀 WAY FORWARD
 </div>
 
-<div class="grow-body accordion-content"
+<div class="grow-body"
 id="forwardContent">
 
 <div class="grow-guide">
@@ -739,10 +740,13 @@ document.getElementById('davidResults').innerHTML=html;
 }
 function toggleAccordion(id){
 
-const section =
-document.getElementById(id);
+const section = document.getElementById(id);
 
-section.classList.toggle('open');
+if(section.classList.contains('open')){
+    section.classList.remove('open');
+}else{
+    section.classList.add('open');
+}
 
 }
 function showTab(tabId,button){
