@@ -199,38 +199,7 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
     text-align:center;
 }
 
-/* ══ PRINT / PDF STYLES ══ */
-@media print {
-    body { background:white !important; padding:0 !important; font-size:11pt; }
-    .wrapper { max-width:100% !important; }
-    .nav-tabs, .back-top-btn, .export-card, .export-btn,
-    .nav-btn, button, input[type=range] { display:none !important; }
-    .tab-content { display:block !important; }
-    .david-section, .bomikazi-section { display:block !important; }
-    .grow-body, .session-body { display:block !important; }
-    .card, .hero, .feature-card, .grow-stage, .session-stage,
-    .journal-entry, .progress-item, .info-box {
-        break-inside:avoid; page-break-inside:avoid;
-    }
-    .print-only { display:block !important; }
-    .screen-only { display:none !important; }
-    h1 { font-size:18pt; color:#001489 !important; }
-    h2, .section-heading { font-size:14pt; color:#001489 !important; }
-    .card-title { font-size:12pt; }
-    .print-page-break { page-break-before:always; }
-    .print-header {
-        display:flex !important; align-items:center; justify-content:space-between;
-        border-bottom:3px solid #001489; padding-bottom:12px; margin-bottom:20px;
-    }
-    .grow-textarea {
-        border:1px solid #ccc !important; min-height:60px !important;
-        background:white !important;
-    }
-    .grow-header { background:#001489 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    .session-header { background:#007DBA !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    th { background:#f2f4f9 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    .progress-bar-fill { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-}
+/* Print styles handled by individual report windows — not needed here */
 
 /* ── MOBILE ── */
 @media(max-width:768px){
@@ -343,7 +312,7 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
         <p style="color:var(--muted);font-size:.9rem;margin-bottom:18px;line-height:1.6;">
             Generate a consolidated PDF record of all coaching data for both David and Bomikazi — including development needs, GROW plans, session reflections and progress — for inclusion in your NQF 7 Portfolio of Evidence.
         </p>
-        <button class="export-btn" onclick="exportPDF()">⬇ Download Complete Coaching Record (PDF)</button>
+        <button class="export-btn" onclick="exportPDF('both')">⬇ Download Complete Coaching Record (PDF)</button>
     </div>
 
 </div>
@@ -805,7 +774,7 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
         <!-- DAVID INDIVIDUAL DOWNLOAD -->
         <div style="text-align:center;padding:24px 0 8px;">
             <p style="color:var(--muted);font-size:.88rem;margin-bottom:14px;line-height:1.6;">Once your coaching is complete, download your personal coaching record for your own records and the Portfolio of Evidence.</p>
-            <button onclick="exportPDF()" style="background:var(--blue);color:white;border:none;border-radius:50px;padding:14px 32px;font-family:Inter,sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#006ba0'" onmouseout="this.style.background='var(--blue)'">⬇ Download My Coaching Summary (PDF)</button>
+            <button onclick="exportPDF('david')" style="background:var(--blue);color:white;border:none;border-radius:50px;padding:14px 32px;font-family:Inter,sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#006ba0'" onmouseout="this.style.background='var(--blue)'">⬇ Download My Coaching Summary (PDF)</button>
         </div>
 
     </div>
@@ -1266,7 +1235,7 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
         <!-- BOMIKAZI INDIVIDUAL DOWNLOAD -->
         <div style="text-align:center;padding:24px 0 8px;">
             <p style="color:var(--muted);font-size:.88rem;margin-bottom:14px;line-height:1.6;">Once your coaching is complete, download your personal coaching record for your own records and the Portfolio of Evidence.</p>
-            <button onclick="exportPDF()" style="background:var(--blue);color:white;border:none;border-radius:50px;padding:14px 32px;font-family:Inter,sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#006ba0'" onmouseout="this.style.background='var(--blue)'">⬇ Download My Coaching Summary (PDF)</button>
+            <button onclick="exportPDF('bomikazi')" style="background:var(--blue);color:white;border:none;border-radius:50px;padding:14px 32px;font-family:Inter,sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#006ba0'" onmouseout="this.style.background='var(--blue)'">⬇ Download My Coaching Summary (PDF)</button>
         </div>
 
     </div>
@@ -1471,45 +1440,330 @@ function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ══ PDF EXPORT ══ */
-function exportPDF() {
-    // Set print date
+/* ══ PDF EXPORT — INDIVIDUAL ══
+   Collects only that person's inputs and renders a clean
+   coaching record in a new window for Save-as-PDF.        */
+
+function exportPDF(person) {
+    if (!person || person === 'both') {
+        exportBothPDF();
+        return;
+    }
     const now = new Date();
     const dateStr = now.toLocaleDateString('en-ZA', { day:'2-digit', month:'long', year:'numeric' });
-    const el = document.getElementById('print_date');
-    if (el) el.textContent = dateStr;
 
-    // Make ALL sections visible for print
-    document.querySelectorAll('.david-section, .bomikazi-section').forEach(s => {
-        s.dataset.origDisplay = s.style.display;
-        s.style.display = 'block';
-    });
-    document.querySelectorAll('.grow-body, .session-body').forEach(b => {
-        b.dataset.origDisplay = b.style.display;
-        b.style.display = 'block';
-    });
-    document.querySelectorAll('.tab-content').forEach(t => {
-        t.dataset.origDisplay = t.style.display || '';
-        t.style.display = 'block';
-    });
+    /* ── gather data ── */
+    const data = person === 'david' ? gatherDavid() : gatherBomikazi();
 
-    // Print
-    window.print();
+    /* ── build HTML ── */
+    const html = buildReportHTML(data, dateStr, person);
 
-    // Restore after print dialog closes
-    setTimeout(() => {
-        document.querySelectorAll('.david-section, .bomikazi-section').forEach(s => {
-            s.style.display = s.dataset.origDisplay || 'none';
-        });
-        document.querySelectorAll('.grow-body, .session-body').forEach(b => {
-            b.style.display = b.dataset.origDisplay || 'none';
-        });
-        document.querySelectorAll('.tab-content').forEach(t => {
-            t.style.display = t.dataset.origDisplay || '';
-        });
-        // Re-activate correct tab
-        document.getElementById('home').style.display = 'block';
-    }, 1000);
+    /* ── open print window ── */
+    const win = window.open('', '_blank', 'width=900,height=700');
+    win.document.write(html);
+    win.document.close();
+    win.focus();
+    setTimeout(() => win.print(), 600);
+}
+
+/* ── Collect David's data ── */
+function gatherDavid() {
+    const competencies = [
+        { name:'User Administration',  rating: document.getElementById('d_ua')?.value  || '—', note: document.getElementById('d_ua_note')?.value  || '' },
+        { name:'Reporting',            rating: document.getElementById('d_rep')?.value || '—', note: document.getElementById('d_rep_note')?.value || '' },
+        { name:'Calendar Management',  rating: document.getElementById('d_cal')?.value || '—', note: document.getElementById('d_cal_note')?.value || '' },
+        { name:'Course Development',   rating: document.getElementById('d_crs')?.value || '—', note: document.getElementById('d_crs_note')?.value || '' },
+        { name:'User Support',         rating: document.getElementById('d_sup')?.value || '—', note: document.getElementById('d_sup_note')?.value || '' },
+    ];
+    const grow = {
+        goal:    document.getElementById('dg_goal_text')?.value    || localStorage.getItem('dg_goal_text')    || '',
+        reality: document.getElementById('dg_reality_text')?.value || localStorage.getItem('dg_reality_text') || '',
+        options: document.getElementById('dg_options_text')?.value || localStorage.getItem('dg_options_text') || '',
+        forward: document.getElementById('dg_forward_text')?.value || localStorage.getItem('dg_forward_text') || '',
+    };
+    const sessions = [
+        { num:1, title:'LMS Orientation',               date:'2 June 2026',  id:'ds1_reflect' },
+        { num:2, title:'User Administration',           date:'4 June 2026',  id:'ds2_reflect' },
+        { num:3, title:'Enrolments',                    date:'9 June 2026',  id:'ds3_reflect' },
+        { num:4, title:'Reporting',                     date:'11 June 2026', id:'ds4_reflect' },
+        { num:5, title:'Calendar Management',           date:'16 June 2026', id:'ds5_reflect' },
+        { num:6, title:'Course Development',            date:'18 June 2026', id:'ds6_reflect' },
+        { num:7, title:'Troubleshooting & User Support',date:'23 June 2026', id:'ds7_reflect' },
+        { num:8, title:'Final Assessment & Evaluation', date:'30 June 2026', id:'ds8_reflect' },
+    ].map(s => ({ ...s, reflection: document.getElementById(s.id)?.value || localStorage.getItem(s.id) || '' }));
+
+    const progress = [
+        { name:'User Administration',  pct: document.getElementById('prog_ua')?.value  || '20' },
+        { name:'Reporting',            pct: document.getElementById('prog_rep')?.value || '20' },
+        { name:'Calendar Management',  pct: document.getElementById('prog_cal')?.value || '20' },
+        { name:'Course Development',   pct: document.getElementById('prog_crs')?.value || '20' },
+        { name:'User Support',         pct: document.getElementById('prog_sup')?.value || '20' },
+    ];
+
+    const journal = davidJournal;
+
+    return {
+        name:     'David Oliphant',
+        role:     'LMS Administrator · Connect@CTLI',
+        started:  '1 June 2026',
+        coaching: '2 – 30 June 2026',
+        competencies, grow, sessions, progress, journal
+    };
+}
+
+/* ── Collect Bomikazi's data ── */
+function gatherBomikazi() {
+    const competencies = [
+        { name:'Attendance Administration', rating: document.getElementById('b_att')?.value   || '—', note: document.getElementById('b_att_note')?.value   || '' },
+        { name:'Leave Administration',      rating: document.getElementById('b_leave')?.value || '—', note: document.getElementById('b_leave_note')?.value || '' },
+        { name:'Records Management',        rating: document.getElementById('b_rec')?.value   || '—', note: document.getElementById('b_rec_note')?.value   || '' },
+        { name:'Document Control',          rating: document.getElementById('b_doc')?.value   || '—', note: document.getElementById('b_doc_note')?.value   || '' },
+        { name:'Workflow Coordination',     rating: document.getElementById('b_wf')?.value    || '—', note: document.getElementById('b_wf_note')?.value    || '' },
+        { name:'Reporting',                 rating: document.getElementById('b_rep')?.value   || '—', note: document.getElementById('b_rep_note')?.value   || '' },
+        { name:'Systems Usage',             rating: document.getElementById('b_sys')?.value   || '—', note: document.getElementById('b_sys_note')?.value   || '' },
+    ];
+    const grow = {
+        goal:    document.getElementById('bg_goal_text')?.value    || localStorage.getItem('bg_goal_text')    || '',
+        reality: document.getElementById('bg_reality_text')?.value || localStorage.getItem('bg_reality_text') || '',
+        options: document.getElementById('bg_options_text')?.value || localStorage.getItem('bg_options_text') || '',
+        forward: document.getElementById('bg_forward_text')?.value || localStorage.getItem('bg_forward_text') || '',
+    };
+    const sessions = [
+        { num:1, title:'Role Orientation',       date:'10 June 2026', id:'bs1_reflect' },
+        { num:2, title:'Attendance Registers',   date:'12 June 2026', id:'bs2_reflect' },
+        { num:3, title:'Leave Administration',   date:'17 June 2026', id:'bs3_reflect' },
+        { num:4, title:'Records Management',     date:'19 June 2026', id:'bs4_reflect' },
+        { num:5, title:'Workflow Coordination',  date:'24 June 2026', id:'bs5_reflect' },
+        { num:6, title:'Systems Training',       date:'26 June 2026', id:'bs6_reflect' },
+        { num:7, title:'Final Assessment',       date:'30 June 2026', id:'bs7_reflect' },
+    ].map(s => ({ ...s, reflection: document.getElementById(s.id)?.value || localStorage.getItem(s.id) || '' }));
+
+    const progress = [
+        { name:'Attendance Administration', pct: document.getElementById('bp_att')?.value   || '20' },
+        { name:'Leave Administration',      pct: document.getElementById('bp_leave')?.value || '20' },
+        { name:'Records Management',        pct: document.getElementById('bp_rec')?.value   || '20' },
+        { name:'Document Control',          pct: document.getElementById('bp_doc')?.value   || '20' },
+        { name:'Workflow Coordination',     pct: document.getElementById('bp_wf')?.value    || '20' },
+        { name:'Reporting',                 pct: document.getElementById('bp_rep')?.value   || '20' },
+        { name:'Systems Usage',             pct: document.getElementById('bp_sys')?.value   || '20' },
+    ];
+
+    const journal = bomikaziJournal;
+
+    return {
+        name:     'Bomikazi Majikijela',
+        role:     'Office Manager · PDD Unit',
+        started:  '9 June 2026',
+        coaching: '10 – 30 June 2026',
+        competencies, grow, sessions, progress, journal
+    };
+}
+
+/* ── Build the standalone report HTML ── */
+function buildReportHTML(d, dateStr, person) {
+    const navy  = '#001489';
+    const blue  = '#007DBA';
+    const green = '#8FAD15';
+    const muted = '#5a5f7a';
+    const page  = '#f2f4f9';
+
+    function ratingColour(r) {
+        const n = Number(r);
+        if (n <= 2) return '#BA0C2F';
+        if (n === 3) return '#FFC600';
+        return '#8FAD15';
+    }
+
+    function barHTML(pct) {
+        const n = Number(pct);
+        const col = n < 40 ? '#BA0C2F' : n < 70 ? '#FFC600' : '#8FAD15';
+        return `<div style="background:#dde1ee;border-radius:20px;height:10px;overflow:hidden;margin-top:4px;">
+            <div style="width:${n}%;height:10px;background:${col};border-radius:20px;"></div></div>
+            <div style="font-size:.75rem;color:${muted};text-align:right;margin-top:3px;">${n}%</div>`;
+    }
+
+    function section(title, colour, content) {
+        return `<div style="margin-bottom:24px;break-inside:avoid;">
+            <div style="background:${colour};color:white;padding:11px 16px;border-radius:8px 8px 0 0;font-weight:700;font-size:.95rem;">${title}</div>
+            <div style="border:1px solid #dde1ee;border-top:none;border-radius:0 0 8px 8px;padding:16px;background:white;">${content}</div>
+        </div>`;
+    }
+
+    function reflectionBox(text) {
+        const val = (text || '').trim();
+        return `<div style="background:${page};border:1px solid #dde1ee;border-radius:6px;padding:12px;min-height:48px;font-size:.88rem;color:${val ? '#222' : muted};line-height:1.6;white-space:pre-wrap;">${val || '<em>No reflection recorded.</em>'}</div>`;
+    }
+
+    /* ── 1. Development Needs Analysis ── */
+    const dnaRows = d.competencies.map(c => `
+        <tr>
+            <td style="padding:9px 12px;border-bottom:1px solid #eee;color:#333;font-size:.88rem;">${c.name}</td>
+            <td style="padding:9px 12px;border-bottom:1px solid #eee;text-align:center;">
+                <span style="background:${ratingColour(c.rating)};color:white;font-weight:700;padding:3px 12px;border-radius:20px;font-size:.85rem;">${c.rating}</span>
+            </td>
+            <td style="padding:9px 12px;border-bottom:1px solid #eee;color:${muted};font-size:.85rem;">${c.note || '—'}</td>
+        </tr>`).join('');
+
+    const dnaContent = `<table style="width:100%;border-collapse:collapse;">
+        <tr style="background:${page};">
+            <th style="padding:9px 12px;text-align:left;color:${navy};font-size:.85rem;">Competency</th>
+            <th style="padding:9px 12px;text-align:center;color:${navy};font-size:.85rem;">Self-Rating</th>
+            <th style="padding:9px 12px;text-align:left;color:${navy};font-size:.85rem;">Notes</th>
+        </tr>${dnaRows}</table>
+        <p style="font-size:.78rem;color:${muted};margin-top:10px;">Scale: 1 = No experience &nbsp;·&nbsp; 5 = Fully confident &nbsp;·&nbsp; 🔴 1–2 High priority &nbsp;·&nbsp; 🟡 3 Medium priority &nbsp;·&nbsp; 🟢 4–5 Strength</p>`;
+
+    /* ── 2. GROW Planner ── */
+    const growContent = `
+        <p style="font-size:.82rem;color:${muted};margin-bottom:14px;line-height:1.5;">The GROW model structured ${d.name.split(' ')[0]}'s coaching from goal-setting through to committed action planning.</p>
+        <p style="font-weight:700;color:${navy};margin-bottom:6px;font-size:.9rem;">🎯 GOAL — What ${d.name.split(' ')[0]} wanted to achieve</p>
+        ${reflectionBox(d.grow.goal)}
+        <p style="font-weight:700;color:${navy};margin:14px 0 6px;font-size:.9rem;">🔍 REALITY — Starting point and current situation</p>
+        ${reflectionBox(d.grow.reality)}
+        <p style="font-weight:700;color:${navy};margin:14px 0 6px;font-size:.9rem;">💡 OPTIONS — Development strategies identified</p>
+        ${reflectionBox(d.grow.options)}
+        <p style="font-weight:700;color:${navy};margin:14px 0 6px;font-size:.9rem;">🚀 WAY FORWARD — Committed actions and timelines</p>
+        ${reflectionBox(d.grow.forward)}`;
+
+    /* ── 3. Session Reflections ── */
+    const sessionContent = d.sessions.map(s => `
+        <div style="margin-bottom:16px;break-inside:avoid;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <span style="font-weight:700;color:${navy};font-size:.9rem;">Session ${s.num} · ${s.title}</span>
+                <span style="font-size:.78rem;color:${muted};background:${page};padding:2px 10px;border-radius:20px;">${s.date}</span>
+            </div>
+            ${reflectionBox(s.reflection)}
+        </div>`).join('');
+
+    /* ── 4. Progress Dashboard ── */
+    const progressContent = d.progress.map(p => `
+        <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:.88rem;font-weight:600;color:${navy};">${p.name}</span>
+                <span style="font-size:.8rem;color:${muted};">${p.pct}%</span>
+            </div>
+            ${barHTML(p.pct)}
+        </div>`).join('');
+
+    /* ── 5. Journal ── */
+    const journalContent = d.journal.length
+        ? d.journal.map(e => `
+            <div style="border:1px solid #dde1ee;border-radius:8px;padding:12px;margin-bottom:12px;break-inside:avoid;">
+                <div style="font-size:.78rem;color:${muted};margin-bottom:5px;">${e.date}</div>
+                <div style="font-size:.88rem;color:#333;line-height:1.6;white-space:pre-wrap;">${e.text}</div>
+                ${e.tags.length ? `<div style="margin-top:8px;">${e.tags.map(t=>`<span style="font-size:.72rem;background:#e1effa;color:${blue};padding:2px 10px;border-radius:20px;font-weight:600;margin-right:4px;">${t}</span>`).join('')}</div>` : ''}
+            </div>`).join('')
+        : `<p style="color:${muted};font-size:.88rem;font-style:italic;">No journal entries recorded.</p>`;
+
+    /* ── Assemble full document ── */
+    return `<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Coaching Record — ${d.name}</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Arial,sans-serif; background:white; color:#222; padding:32px 40px; }
+  @media print {
+    body { padding:16px 20px; }
+    @page { margin:18mm 15mm; }
+    .no-break { break-inside:avoid; page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LETTERHEAD -->
+<div style="border-bottom:4px solid ${navy};padding-bottom:16px;margin-bottom:28px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:4px;">CTLI · Programme Design &amp; Development Unit</div>
+            <div style="font-size:1.5rem;font-weight:700;color:${navy};margin-bottom:2px;">Individual Coaching Record</div>
+            <div style="font-size:.85rem;color:${muted};">NQF 7 Mentoring &amp; Coaching for School Leaders · GROW Model</div>
+        </div>
+        <div style="text-align:right;font-size:.78rem;color:${muted};line-height:1.8;">
+            <div>Generated: ${dateStr}</div>
+            <div style="color:${navy};font-weight:600;">CONFIDENTIAL</div>
+            <div>For POE use only</div>
+        </div>
+    </div>
+</div>
+
+<!-- COACHEE PROFILE CARD -->
+<div style="background:${navy};color:white;border-radius:10px;padding:18px 22px;margin-bottom:28px;">
+    <div style="font-size:1.2rem;font-weight:700;margin-bottom:10px;">${d.name}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+        <div><div style="font-size:.68rem;opacity:.7;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;">Role</div><div style="font-size:.88rem;">${d.role}</div></div>
+        <div><div style="font-size:.68rem;opacity:.7;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;">Role Start Date</div><div style="font-size:.88rem;">${d.started}</div></div>
+        <div><div style="font-size:.68rem;opacity:.7;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;">Coaching Period</div><div style="font-size:.88rem;">${d.coaching}</div></div>
+    </div>
+</div>
+
+<!-- SECTION 1 -->
+${section('1. Development Needs Analysis — Competency Self-Assessment', blue, dnaContent)}
+
+<!-- SECTION 2 -->
+${section('2. GROW Coaching Planner', navy, growContent)}
+
+<!-- SECTION 3 — page break before sessions -->
+<div style="page-break-before:always;"></div>
+${section('3. Session Reflections', blue, sessionContent)}
+
+<!-- SECTION 4 -->
+${section('4. Competency Progress at Conclusion of Programme', navy, progressContent)}
+
+<!-- SECTION 5 -->
+${section('5. Reflection Journal', blue, journalContent)}
+
+<!-- FOOTER -->
+<div style="border-top:2px solid ${navy};margin-top:32px;padding-top:14px;display:flex;justify-content:space-between;font-size:.75rem;color:${muted};">
+    <span>CTLI Coaching &amp; Mentoring Hub · NQF 7 Portfolio of Evidence</span>
+    <span>Coachee: ${d.name} · Generated ${dateStr}</span>
+</div>
+
+</body>
+</html>`;
+}
+
+/* ══ PDF EXPORT — COMBINED (Home tab) ══ */
+function exportBothPDF() {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-ZA', { day:'2-digit', month:'long', year:'numeric' });
+    const david    = gatherDavid();
+    const bomikazi = gatherBomikazi();
+    const navy  = '#001489';
+    const blue  = '#007DBA';
+    const muted = '#5a5f7a';
+
+    const davidHTML    = buildReportHTML(david,    dateStr, 'david');
+    const bomikaziHTML = buildReportHTML(bomikazi, dateStr, 'bomikazi');
+
+    // Extract just the body content from each
+    const davidBody    = davidHTML.replace(/[\s\S]*<body[^>]*>([\s\S]*)<\/body>[\s\S]*/,'$1');
+    const bomikaziBody = bomikaziHTML.replace(/[\s\S]*<body[^>]*>([\s\S]*)<\/body>[\s\S]*/,'$1');
+
+    const combined = `<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Coaching Records — David Oliphant &amp; Bomikazi Majikijela</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Arial,sans-serif; background:white; color:#222; padding:32px 40px; }
+  .page-break { page-break-before:always; padding-top:32px; }
+  @media print { body { padding:16px 20px; } @page { margin:18mm 15mm; } }
+</style>
+</head>
+<body>
+${davidBody}
+<div class="page-break">${bomikaziBody}</div>
+</body>
+</html>`;
+
+    const win = window.open('', '_blank', 'width=900,height=700');
+    win.document.write(combined);
+    win.document.close();
+    win.focus();
+    setTimeout(() => win.print(), 600);
 }
 
 /* ══ INIT ══ */
