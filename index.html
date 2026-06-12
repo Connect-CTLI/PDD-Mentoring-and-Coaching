@@ -249,7 +249,7 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
 
 <div class="module-tag">CTLI Programme Design & Development Unit</div>
 <h1>Coaching &amp; Mentoring Development Hub</h1>
-<p class="subtitle">Professional Coaching Programme · Planned Coaching Intervention · GROW Model</p>
+<p class="subtitle">NQF 7 Portfolio of Evidence · Planned Coaching Intervention · GROW Model</p>
 
 <!-- NAV -->
 <div class="nav-tabs">
@@ -268,17 +268,17 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
     <div>
         <div style="font-size:8pt;text-transform:uppercase;letter-spacing:.08em;color:#5a5f7a;margin-bottom:4px;">CTLI Programme Design &amp; Development Unit</div>
         <div style="font-size:16pt;font-weight:700;color:#001489;">Coaching &amp; Mentoring — Final Summary Record</div>
-        <div style="font-size:9pt;color:#5a5f7a;">Workplace Coaching Programme · GROW Coaching Model</div>
+        <div style="font-size:9pt;color:#5a5f7a;">NQF 7 Portfolio of Evidence · GROW Coaching Model</div>
     </div>
     <div style="text-align:right;font-size:8pt;color:#5a5f7a;">
         Generated: <span id="print_date"></span><br>
-        CONFIDENTIAL · Internal Coaching Record
+        CONFIDENTIAL · For POE use only
     </div>
 </div>
 
     <div class="hero">
         <h2>Welcome to the Coaching Hub</h2>
-        <p>This digital coaching environment has been developed as part of a planned workplace coaching and mentoring intervention within the Programme Design and Development Unit of CTLI. The Hub supports a structured workplace coaching and mentoring programme within the Programme Design and Development Unit.</p>
+        <p>This digital coaching environment has been developed as part of a planned workplace coaching and mentoring intervention within the Programme Design and Development Unit of CTLI. The Hub serves as evidence for the NQF 7 Mentoring and Coaching for School Leaders portfolio.</p>
         <br>
         <p>The intervention supports two staff members transitioning into new roles, using the GROW coaching model embedded directly into a digital platform that demonstrates coaching theory, reflective practice and digital innovation.</p>
     </div>
@@ -333,17 +333,17 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
     <div class="card">
         <div class="card-title">💡 Digital Coaching Strategy</div>
         <div class="card-text">
-            This Hub is hosted via GitHub Pages as a live digital coaching environment. It demonstrates digital leadership, technology-enhanced coaching and self-directed learning. The platform replaces traditional paper-based coaching records with interactive tools including development needs analysis, GROW planners, reflection journals and progress dashboards — all accessible on mobile devices and through Moodle.
+            This Hub is hosted via GitHub Pages as a live digital coaching environment. It demonstrates digital leadership, technology-enhanced coaching and self-directed learning. The platform replaces traditional paper-based coaching records with interactive tools including development needs analysis, GROW planners, reflection journals and progress dashboards — all accessible on mobile and desktop devices.
         </div>
     </div>
 
-    <!-- EXPORT CARD -->
+    <!-- COMBINED EXPORT CARD — HOME -->
     <div class="export-card screen-only">
-        <div style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:8px;">📄 Export Final Coaching Summary</div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:8px;">📄 Download Full Coaching Summary (Both Coachees)</div>
         <p style="color:var(--muted);font-size:.9rem;margin-bottom:18px;line-height:1.6;">
-            Generate a consolidated PDF record of all coaching data for both coachees — including development needs, GROW plans, session reflections and progress — for coaching records and professional development purposes.
+            Generate a consolidated PDF record of all coaching data for both David and Bomikazi — including development needs, GROW plans, session reflections and progress — for inclusion in your NQF 7 Portfolio of Evidence.
         </p>
-        <button class="export-btn" onclick="exportPDF()">⬇ Download Full Coaching Summary (PDF)</button>
+        <button class="export-btn" onclick="exportPDF()">⬇ Download Complete Coaching Record (PDF)</button>
     </div>
 
 </div>
@@ -354,7 +354,7 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
 <div id="david" class="tab-content">
 
     <div class="info-box">
-        <strong>David Oliphant</strong> commenced as LMS Administrator on 1 June 2026. This coaching programme supports his transition into the Connect@CTLI Moodle administration role through structured workplace coaching aligned to the GROW model.
+        <strong>David Oliphant</strong> commenced as LMS Administrator on 1 June 2026. This coaching programme supports his transition into the Connect@CTLI LMS administration role through structured workplace coaching aligned to the GROW model.
     </div>
 
     <!-- ── SECTION TABS for David ── -->
@@ -401,7 +401,9 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </tr>
             </table>
             <br>
-            <button class="nav-btn" onclick="calcDavid()">Analyse Development Needs</button>
+            <div style="text-align:center;margin:20px 0 4px;">
+                <button class="nav-btn" onclick="calcDavid()" style="padding:14px 36px;font-size:1rem;background:var(--navy);color:white;border-color:var(--navy);">🔍 Analyse Development Needs</button>
+            </div>
             <div id="davidResults"></div>
             <div style="text-align:center;margin-top:16px;">
                 <button class="back-top-btn" onclick="scrollToTop()">↑ Back to Top</button>
@@ -413,8 +415,9 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
     <div id="d-grow" class="david-section" style="display:none;">
         <h2 class="section-heading">🎯 GROW Coaching Planner</h2>
         <div class="card">
-            <div class="card-text" style="margin-bottom:20px;">
-                Use your development needs analysis to inform your reflections below. Click each section heading to open it.
+            <div class="grow-guide" style="margin-bottom:20px;">
+                <strong>David, this planner is designed specifically for you.</strong><br><br>
+                As you step into your new role as LMS Administrator, the GROW model provides a structured space for you to think deeply about your own development — not just what you need to learn, but why it matters and how you will get there. Completing each section honestly will help you and your coach focus your sessions on what will make the biggest difference to your confidence and performance. Your reflections are saved privately and form part of your coaching record. Click each heading below to open that section.
             </div>
 
             <div class="grow-stage">
@@ -423,7 +426,8 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </div>
                 <div class="grow-body" id="dg_goal">
                     <div class="grow-guide">
-                        <strong>Guiding questions:</strong>
+                        <strong>David, take a moment to think about what success looks like for you in this role.</strong> Defining your goals clearly will give your coaching a focused direction and help you measure your own growth. Being specific here will make every coaching session more purposeful.
+                        <br><br><em>Consider:</em>
                         <ul>
                             <li>Which LMS competencies require the most development?</li>
                             <li>What would successful performance as LMS Administrator look like?</li>
@@ -442,9 +446,10 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </div>
                 <div class="grow-body" id="dg_reality">
                     <div class="grow-guide">
-                        <strong>Guiding questions:</strong>
+                        <strong>David, an honest reflection on where you are right now is one of the most valuable things you can do.</strong> It builds self-awareness, helps your coach understand your starting point, and ensures that your development plan is grounded in reality rather than assumption.
+                        <br><br><em>Consider:</em>
                         <ul>
-                            <li>What ICT and Moodle experience do you already possess?</li>
+                            <li>What ICT and LMS experience do you already possess?</li>
                             <li>Which LMS tasks can you currently perform confidently?</li>
                             <li>Which tasks currently require guidance or support?</li>
                             <li>What development needs emerged from your self-assessment?</li>
@@ -461,7 +466,8 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </div>
                 <div class="grow-body" id="dg_options">
                     <div class="grow-guide">
-                        <strong>Guiding questions:</strong>
+                        <strong>David, this is your opportunity to think creatively about how you will grow.</strong> The more options you identify, the more agency you have over your own development. Your coach can open doors, but you are the one who walks through them.
+                        <br><br><em>Consider:</em>
                         <ul>
                             <li>What support can your coach and colleagues provide?</li>
                             <li>Which practical workplace tasks will help build competence?</li>
@@ -481,7 +487,8 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </div>
                 <div class="grow-body" id="dg_forward">
                     <div class="grow-guide">
-                        <strong>Guiding questions:</strong>
+                        <strong>David, this is where your plan becomes real.</strong> Committing to specific actions — with timelines and evidence — transforms reflection into progress. Your coach will use what you write here to support and hold you accountable between sessions.
+                        <br><br><em>Consider:</em>
                         <ul>
                             <li>What specific actions will be completed before the next session?</li>
                             <li>What evidence will demonstrate progress?</li>
@@ -517,10 +524,10 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 <span class="chevron">▶</span>
             </div>
             <div class="session-body" id="ds1">
-                <div class="grow-guide"><strong>Session Objectives:</strong> Introduce David to the Connect@CTLI Moodle environment. Establish coaching relationship and agree on the coaching contract. Orientate David to the LMS Administrator interface and core navigation.</div>
+                <div class="grow-guide"><strong>Session Objectives:</strong> Introduce David to the Connect@CTLI LMS environment. Establish the coaching relationship and agree on the coaching contract. Orientate David to the LMS Administrator interface and core navigation.</div>
                 <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
                 <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
-                    <li>Tour of the Moodle Admin dashboard</li>
+                    <li>Tour of the LMS Admin dashboard</li>
                     <li>Review of key menus: Site Administration, Users, Courses</li>
                     <li>Introduction to the coaching programme structure</li>
                     <li>Sign coaching contract and agree goals</li>
@@ -613,7 +620,7 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 <span class="chevron">▶</span>
             </div>
             <div class="session-body" id="ds5">
-                <div class="grow-guide"><strong>Session Objectives:</strong> Develop competence in managing the Moodle calendar, scheduling events and configuring notifications for staff and participants.</div>
+                <div class="grow-guide"><strong>Session Objectives:</strong> Develop competence in managing the LMS calendar, scheduling events and configuring notifications for staff and participants.</div>
                 <p style="color:var(--navy);font-weight:600;margin-bottom:8px;">Activities</p>
                 <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
                     <li>Create site-wide and course-specific calendar events</li>
@@ -666,7 +673,7 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 <ul style="margin-left:20px;color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:14px;">
                     <li>Practise resolving common login and access issues</li>
                     <li>Respond to simulated support requests</li>
-                    <li>Navigate Moodle documentation and community forums</li>
+                    <li>Navigate LMS documentation and community forums</li>
                     <li>Develop a personal troubleshooting reference guide</li>
                 </ul>
                 <label>Session Reflection (David)</label>
@@ -795,7 +802,16 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
             </table>
         </div>
 
+        <!-- DAVID INDIVIDUAL DOWNLOAD -->
+        <div style="text-align:center;padding:24px 0 8px;">
+            <p style="color:var(--muted);font-size:.88rem;margin-bottom:14px;line-height:1.6;">Once your coaching is complete, download your personal coaching record for your own records and the Portfolio of Evidence.</p>
+            <button onclick="exportPDF()" style="background:var(--blue);color:white;border:none;border-radius:50px;padding:14px 32px;font-family:Inter,sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#006ba0'" onmouseout="this.style.background='var(--blue)'">⬇ Download My Coaching Summary (PDF)</button>
+        </div>
+
     </div>
+</div>
+
+
 </div>
 
 <!-- ══════════════════════════════════════════
@@ -861,7 +877,9 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </tr>
             </table>
             <br>
-            <button class="nav-btn" onclick="calcBomikazi()">Analyse Development Needs</button>
+            <div style="text-align:center;margin:20px 0 4px;">
+                <button class="nav-btn" onclick="calcBomikazi()" style="padding:14px 36px;font-size:1rem;background:var(--navy);color:white;border-color:var(--navy);">🔍 Analyse Development Needs</button>
+            </div>
             <div id="bomikaziResults"></div>
             <div style="text-align:center;margin-top:16px;">
                 <button class="back-top-btn" onclick="scrollToTop()">↑ Back to Top</button>
@@ -873,8 +891,9 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
     <div id="b-grow" class="bomikazi-section" style="display:none;">
         <h2 class="section-heading">🎯 GROW Coaching Planner — Bomikazi Majikijela</h2>
         <div class="card">
-            <div class="card-text" style="margin-bottom:20px;">
-                Use your development needs analysis to inform your reflections below. Click each section heading to open it.
+            <div class="grow-guide" style="margin-bottom:20px;">
+                <strong>Bomikazi, this planner has been created with your transition in mind.</strong><br><br>
+                Returning from maternity leave and stepping into a new management role at the same time is a significant milestone. This GROW planner gives you a dedicated space to reflect on where you are starting from, what you want to achieve, and the practical steps that will help you settle confidently into your role as Office Manager. The more honestly you engage with each section, the more your coaching sessions can be tailored to your real needs. Your responses are saved privately and form part of your coaching record. Click each heading below to open that section.
             </div>
 
             <div class="grow-stage">
@@ -883,7 +902,8 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </div>
                 <div class="grow-body" id="bg_goal">
                     <div class="grow-guide">
-                        <strong>Guiding questions:</strong>
+                        <strong>Bomikazi, setting clear goals is the first and most important step in your coaching journey.</strong> When you know what you are working towards, every session, every task and every conversation becomes more meaningful. Your goals will anchor your development and give you something to celebrate as you achieve them.
+                        <br><br><em>Consider:</em>
                         <ul>
                             <li>What does success look like in the Office Manager role?</li>
                             <li>Which competencies are most critical to develop first?</li>
@@ -902,7 +922,8 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </div>
                 <div class="grow-body" id="bg_reality">
                     <div class="grow-guide">
-                        <strong>Guiding questions:</strong>
+                        <strong>Bomikazi, reflecting honestly on where you are now takes courage — and it is worth it.</strong> Acknowledging both your strengths and the areas where you need support allows your coaching to be targeted, relevant and genuinely useful to you. There are no wrong answers here.
+                        <br><br><em>Consider:</em>
                         <ul>
                             <li>What office administration experience do you already have?</li>
                             <li>What systems and processes are you familiar with?</li>
@@ -921,7 +942,8 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </div>
                 <div class="grow-body" id="bg_options">
                     <div class="grow-guide">
-                        <strong>Guiding questions:</strong>
+                        <strong>Bomikazi, you have more development options available to you than you may realise.</strong> This section helps you identify them so that your coaching is not the only source of support — it connects you to a wider network of learning that will continue long after the programme ends.
+                        <br><br><em>Consider:</em>
                         <ul>
                             <li>What training or orientation is available?</li>
                             <li>Who can you shadow or consult within the unit?</li>
@@ -940,7 +962,8 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 </div>
                 <div class="grow-body" id="bg_forward">
                     <div class="grow-guide">
-                        <strong>Guiding questions:</strong>
+                        <strong>Bomikazi, your action plan is your commitment to yourself.</strong> Writing down what you will do — and by when — significantly increases the likelihood that it will happen. Your coach will check in on your progress, celebrate your wins and help you navigate any challenges.
+                        <br><br><em>Consider:</em>
                         <ul>
                             <li>What actions will you commit to before the next session?</li>
                             <li>What evidence will you collect to demonstrate progress?</li>
@@ -1238,6 +1261,12 @@ label { display:block; font-weight:600; color:var(--navy); margin-bottom:8px; fo
                 <tr><td>6</td><td>Systems Training</td><td>26 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
                 <tr><td>7</td><td>Final Assessment</td><td>30 June 2026</td><td><span class="badge badge-green">Planned</span></td></tr>
             </table>
+        </div>
+
+        <!-- BOMIKAZI INDIVIDUAL DOWNLOAD -->
+        <div style="text-align:center;padding:24px 0 8px;">
+            <p style="color:var(--muted);font-size:.88rem;margin-bottom:14px;line-height:1.6;">Once your coaching is complete, download your personal coaching record for your own records and the Portfolio of Evidence.</p>
+            <button onclick="exportPDF()" style="background:var(--blue);color:white;border:none;border-radius:50px;padding:14px 32px;font-family:Inter,sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#006ba0'" onmouseout="this.style.background='var(--blue)'">⬇ Download My Coaching Summary (PDF)</button>
         </div>
 
     </div>
